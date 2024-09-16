@@ -32,13 +32,16 @@ public class SecurityConfig {
                         
                         .requestMatchers("/customer/add").permitAll()
                         .requestMatchers("/customerDetails/add").hasRole("CUSTOMER")
+                        
                         .requestMatchers("/policy/showPolicy/{policyType}").permitAll()
                         .requestMatchers("/policy/buy/{policyType}").hasRole("CUSTOMER")
                         
+                        .requestMatchers("/claim/showAll").hasRole("CUSTOMER")
+                        
+                        .requestMatchers("/renewal/showAll").hasRole("CUSTOMER")
+                        
                         .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
                         
-                        .requestMatchers("/customer/showPolicy/{policyType}").permitAll()
-                        .requestMatchers("/customer/policy/buy/{policyType}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

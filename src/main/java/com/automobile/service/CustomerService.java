@@ -55,11 +55,8 @@ public class CustomerService {
 		return optional.get();
 	}
 
-	public Customer updateCustomer(int customerId, Customer newCustomer) throws InvalidIdException {
-		Optional<Customer> optional = customerRepository.findById(customerId);
-		if (optional.isEmpty())
-			throw new InvalidIdException("Given Customer Id is Invalid");
-		Customer customerDB = optional.get();
+	public Customer updateCustomer(String customerUsername, Customer newCustomer) {
+		Customer customerDB = customerRepository.getCustomer(customerUsername);
 		Address addressDB = customerDB.getAddress();
 
 		customerDB.setName(newCustomer.getName());

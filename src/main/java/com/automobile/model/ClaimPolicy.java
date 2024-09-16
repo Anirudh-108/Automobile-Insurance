@@ -13,7 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
 @Entity
-public class Claim {
+public class ClaimPolicy {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -26,6 +26,9 @@ public class Claim {
 
 	@OneToOne
 	private CustomerPolicy customerPolicy;
+
+	@OneToOne
+	private ClaimDocuments claimDocuments;
 
 	public int getId() {
 		return id;
@@ -66,4 +69,19 @@ public class Claim {
 	public void setCustomerPolicy(CustomerPolicy customerPolicy) {
 		this.customerPolicy = customerPolicy;
 	}
+
+	public ClaimDocuments getClaimDocuments() {
+		return claimDocuments;
+	}
+
+	public void setClaimDocuments(ClaimDocuments claimDocuments) {
+		this.claimDocuments = claimDocuments;
+	}
+
+	@Override
+	public String toString() {
+		return "ClaimPolicy [id=" + id + ", claimAmount=" + claimAmount + ", claimDate=" + claimDate + ", claimStatus="
+				+ claimStatus + ", customerPolicy=" + customerPolicy + ", claimDocuments=" + claimDocuments + "]";
+	}
+
 }

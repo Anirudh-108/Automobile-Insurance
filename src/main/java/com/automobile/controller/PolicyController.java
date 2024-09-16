@@ -29,8 +29,8 @@ public class PolicyController {
 	@PostMapping("/buy/{policyType}")
 	public CustomerPolicy buyPolicy(@RequestBody Vehicle vehicle, @PathVariable String policyType,
 			Principal principal) {
-		String empUsername = principal.getName();
+		String customerUsername = principal.getName();
 		Policy policy = policyService.getPolicy(vehicle, policyType);
-		return policyService.buyPolicy(empUsername, policy, vehicle);
+		return policyService.buyPolicy(customerUsername, policy, vehicle);
 	}
 }

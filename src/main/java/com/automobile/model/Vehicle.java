@@ -26,7 +26,10 @@ public class Vehicle {
 	private String variant;
 	private int manufacturingYear;
 	private double basePrice;
+	@Enumerated(EnumType.STRING)
 	private String fuelType;
+	
+	@Enumerated(EnumType.STRING)
 	private String transmissionType;
 
 	@Enumerated(EnumType.STRING)
@@ -36,6 +39,11 @@ public class Vehicle {
 	private ZoneType zoneType;
 
 	private boolean previousClaim;
+
+	private String registrationNo;
+	private int yearOfPurchase;
+	
+	// private String photosOfVehicle;
 
 	@ManyToOne
 	private Customer customer;
@@ -144,13 +152,22 @@ public class Vehicle {
 		this.customer = customer;
 	}
 
-	@Override
-	public String toString() {
-		return "Vehicle [id=" + id + ", vehicleType=" + vehicleType + ", manufacturerName=" + manufacturerName
-				+ ", modelName=" + modelName + ", variant=" + variant + ", naufacturingYear=" + manufacturingYear
-				+ ", basePrice=" + basePrice + ", fuelType=" + fuelType + ", transmissionType=" + transmissionType
-				+ ", vehicleCondition=" + vehicleCondition + ", zoneType=" + zoneType + ", previousClaim="
-				+ previousClaim + ", customer=" + customer + "]";
+	public String getRegistrationNo() {
+		return registrationNo;
 	}
+
+	public void setRegistrationNo(String registrationNo) {
+		this.registrationNo = registrationNo;
+	}
+
+	public int getYearOfPurchase() {
+		return yearOfPurchase;
+	}
+
+	public void setYearOfPurchase(int yearOfPurchase) {
+		this.yearOfPurchase = yearOfPurchase;
+	}
+
+	
 
 }

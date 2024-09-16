@@ -1,5 +1,6 @@
 package com.automobile.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class CustomerController {
 	}
 
 	@GetMapping("/all")
-	public List<Customer> getAllEmployee() {
+	public List<Customer> getAllCustomers() {
 		return customerService.getAllCustomers();
 	}
 
@@ -45,16 +46,10 @@ public class CustomerController {
 		}
 	}
 
-	@PutMapping("/update/{customerId}")
-	public ResponseEntity<?> updateCustomer(@PathVariable int customerId, @RequestBody Customer newCustomer,
-			MessageDto dto) {
-		try {
-			Customer customer = customerService.updateCustomer(customerId, newCustomer);
-			return ResponseEntity.ok(customer);
-		} catch (InvalidIdException e) {
-			dto.setMsg(e.getMessage());
-			return ResponseEntity.badRequest().body(dto);
-		}
+	@PutMapping("/update")
+	public Customer updateCustomer(@RequestBody Customer newCustomer, Principal principal) {
+		String customerUsername = principal.getName();
+		return customerService.updateCustomer(customerUsername, newCustomer);
 	}
 
 }
