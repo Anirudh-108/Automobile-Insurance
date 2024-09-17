@@ -190,23 +190,6 @@ public class PolicyService {
 
 		Policy policy = new Policy();
 
-//		if (vehicle.getVehicleType().toString().equals(VehicleType.Car.toString())
-//				&& policyType.equals(PolicyType.Comprehensive.toString()))
-//			policy.setDescription(
-//					"This Comprehensive Car Policy provides extensive coverage for your vehicle, protecting against third-party liabilities as well as damages from accidents, theft, fire, vandalism, and natural disasters. It offers peace of mind by covering repair or replacement costs for a wide range of incidents, ensuring all-around protection for your car.");
-//		else if (vehicle.getVehicleType().toString().equals(VehicleType.Bike.toString())
-//				&& policyType.equals(PolicyType.Comprehensive.toString()))
-//			policy.setDescription(
-//					"This Comprehensive Bike Policy offers full protection for your bike, covering third-party liabilities as well as damages caused by accidents, theft, fire, and natural disasters. It ensures financial security by covering repair or replacement costs, providing complete peace of mind for bike owners.");
-//		else if (vehicle.getVehicleType().toString().equals(VehicleType.Car.toString())
-//				&& policyType.equals(PolicyType.ThirdParty.toString()))
-//			policy.setDescription(
-//					"This Third-Party Car Policy covers damages or injuries you cause to others in an accident, including their property or vehicle. It is a mandatory and cost-effective policy that provides financial protection against third-party claims but does not cover damage to your own vehicle.");
-//		else if (vehicle.getVehicleType().toString().equals(VehicleType.Bike.toString())
-//				&& policyType.equals(PolicyType.ThirdParty.toString()))
-//			policy.setDescription(
-//					"This Third-Party Bike Policy provides coverage for damages or injuries you cause to others in an accident, including their property. It is a mandatory and affordable policy, offering financial protection against third-party claims but does not cover damages to your own bike.");
-
 		policy.setPolicyType(PolicyType.valueOf(policyType));
 		policy.setPremiumAmount(premium);
 		policy.setCoverageAmount(coverageAmount);

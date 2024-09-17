@@ -63,6 +63,5 @@ public class ClaimPolicyController {
 			dto.setMsg(e.getMessage());
 			return ResponseEntity.badRequest().body(dto);
 		}
-
 	}
 }
