@@ -7,7 +7,7 @@ import com.automobile.model.CustomerPolicy;
 
 public interface CustomerPolicyRepository extends JpaRepository<CustomerPolicy, Integer> {
 
-	@Query("select cp from CustomerPolicy cp JOIN cp.policy p where p.id=?1")
-	CustomerPolicy getCustomerPolicyByPolicyId(int policyId);
+	@Query("select cp from CustomerPolicy cp JOIN cp.policy p JOIN cp.customer c where p.id=?1 AND c.user.username=?2")
+	CustomerPolicy getCustomerPolicyByPolicyId(int policyId, String customerUsername);
 
 }

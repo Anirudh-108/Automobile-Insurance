@@ -28,7 +28,7 @@ public class ClaimPolicy {
 	private CustomerPolicy customerPolicy;
 
 	@OneToOne
-	private ClaimDocuments claimDocuments;
+	private ClaimDetails claimDocuments;
 
 	public int getId() {
 		return id;
@@ -70,11 +70,11 @@ public class ClaimPolicy {
 		this.customerPolicy = customerPolicy;
 	}
 
-	public ClaimDocuments getClaimDocuments() {
+	public ClaimDetails getClaimDocuments() {
 		return claimDocuments;
 	}
 
-	public void setClaimDocuments(ClaimDocuments claimDocuments) {
+	public void setClaimDocuments(ClaimDetails claimDocuments) {
 		this.claimDocuments = claimDocuments;
 	}
 

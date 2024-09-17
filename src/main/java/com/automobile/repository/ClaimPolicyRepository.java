@@ -14,4 +14,7 @@ public interface ClaimPolicyRepository extends JpaRepository<ClaimPolicy, Intege
 	@Query("select p from CustomerPolicy cp JOIN cp.policy p JOIN cp.customer c where c.id=?1 and p.policyStatus=?2")
 	List<Policy> findPolicyByStatus(int customerId, PolicyStatus active);
 
+	@Query("select clmp from ClaimPolicy clmp JOIN clmp.customerPolicy cp where cp.id=?1")
+	ClaimPolicy getStatusByCustomerPolicyId(int customerPolicyId);
+
 }

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.automobile.dto.MessageDto;
-import com.automobile.model.ClaimDocuments;
+import com.automobile.exception.CannotClaimPolicyException;
+import com.automobile.exception.PolicyNotClaimedException;
+import com.automobile.model.ClaimDetails;
 import com.automobile.model.ClaimPolicy;
 import com.automobile.model.Policy;
 import com.automobile.service.ClaimPolicyService;
@@ -35,10 +37,32 @@ public class ClaimPolicyController {
 		}
 		return ResponseEntity.ok(activeList);
 	}
-	
+
 	@PostMapping("/one/{policyId}")
-	public ClaimPolicy claimPolicy(@PathVariable int policyId,Principal principal,@RequestBody ClaimDocuments claimDocuments) {
+	public ResponseEntity<?> claimPolicy(@PathVariable int policyId, Principal principal,
+			@RequestBody ClaimDetails claimDetails, MessageDto dto) {
 		String customerUsername = principal.getName();
-		return claimPolicyService.claimPolicy(policyId,customerUsername,claimDocuments);
+		try {
+			ClaimPolicy claimPolicy = claimPolicyService.claimPolicy(policyId, customerUsername, claimDetails);
+			return ResponseEntity.ok(claimPolicy);
+		} catch (CannotClaimPolicyException e) {
+			dto.setMsg(e.getMessage());
+			return ResponseEntity.badRequest().body(dto);
+		}
+	}
+
+	@GetMapping("/status/{policyId}")
+	public ResponseEntity<?> claimPolicyStatus(@PathVariable int policyId, Principal principal, MessageDto dto) {
+		String customerUsername = principal.getName();
+		String claimStatus;
+		try {
+			claimStatus = claimPolicyService.claimPolicyStatus(policyId, customerUsername);
+			dto.setMsg(claimStatus);
+			return ResponseEntity.ok(dto);
+		} catch (PolicyNotClaimedException e) {
+			dto.setMsg(e.getMessage());
+			return ResponseEntity.badRequest().body(dto);
+		}
+
 	}
 }

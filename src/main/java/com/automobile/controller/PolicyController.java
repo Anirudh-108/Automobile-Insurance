@@ -3,6 +3,7 @@ package com.automobile.controller;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,7 @@ public class PolicyController {
 	@Autowired
 	private PolicyService policyService;
 
-	@PostMapping("/showPolicy/{policyType}")
+	@GetMapping("/showPolicy/{policyType}")
 	public ShowPolicyDto showPolicy(@RequestBody Vehicle vehicle, @PathVariable String policyType) {
 		return policyService.showPolicy(vehicle, policyType);
 	}

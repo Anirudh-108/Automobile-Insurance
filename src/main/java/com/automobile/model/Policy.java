@@ -25,8 +25,9 @@ public class Policy {
 
 	@Enumerated(EnumType.STRING)
 	private PolicyStatus policyStatus;
-	
-	private String description;
+
+//	@Column(columnDefinition = "TEXT")
+//	private String description;
 
 	public int getId() {
 		return id;
@@ -75,19 +76,12 @@ public class Policy {
 	public void setPolicyStatus(PolicyStatus policyStatus) {
 		this.policyStatus = policyStatus;
 	}
-	
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	@Override
 	public String toString() {
 		return "Policy [id=" + id + ", policyType=" + policyType + ", coverageAmount=" + coverageAmount
-				+ ", premiumAmount=" + premiumAmount + ", termLength=" + termLength + "]";
+				+ ", premiumAmount=" + premiumAmount + ", termLength=" + termLength + ", policyStatus=" + policyStatus
+				+ "]";
 	}
 
 }

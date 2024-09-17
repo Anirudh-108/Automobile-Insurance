@@ -37,6 +37,8 @@ public class SecurityConfig {
                         .requestMatchers("/policy/buy/{policyType}").hasRole("CUSTOMER")
                         
                         .requestMatchers("/claim/showAll").hasRole("CUSTOMER")
+                        .requestMatchers("/claim/one/{policyId}").hasRole("CUSTOMER")
+                        .requestMatchers("/claim/status/{policyId}").hasRole("CUSTOMER")
                         
                         .requestMatchers("/renewal/showAll").hasRole("CUSTOMER")
                         
