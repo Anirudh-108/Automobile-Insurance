@@ -10,6 +10,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -29,6 +31,10 @@ public class ClaimPolicy {
 
 	@OneToOne
 	private ClaimDetails claimDocuments;
+	
+	@ManyToOne
+    @JoinColumn(name = "executive_id") 
+    private Executive executive;
 
 	public int getId() {
 		return id;
@@ -78,10 +84,21 @@ public class ClaimPolicy {
 		this.claimDocuments = claimDocuments;
 	}
 
+	public Executive getExecutive() {
+		return executive;
+	}
+
+	public void setExecutive(Executive executive) {
+		this.executive = executive;
+	}
+
 	@Override
 	public String toString() {
 		return "ClaimPolicy [id=" + id + ", claimAmount=" + claimAmount + ", claimDate=" + claimDate + ", claimStatus="
-				+ claimStatus + ", customerPolicy=" + customerPolicy + ", claimDocuments=" + claimDocuments + "]";
+				+ claimStatus + ", customerPolicy=" + customerPolicy + ", claimDocuments=" + claimDocuments
+				+ ", executive=" + executive + "]";
 	}
+
+	
 
 }
