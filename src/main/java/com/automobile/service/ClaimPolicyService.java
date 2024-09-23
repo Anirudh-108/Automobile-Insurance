@@ -1,9 +1,12 @@
 package com.automobile.service;
 
 import java.time.LocalDate;
+
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,12 +47,16 @@ public class ClaimPolicyService {
 	@Autowired
 	private ClaimDetailsRepository claimDetailsRepository;
 
+	private Logger logger = LoggerFactory.getLogger(ClaimPolicyService.class);
+
 //	@Autowired
 //	private PolicyRepository policyRepository;
 
 	public List<Policy> getAllActivePolicy(String customerUsername) {
 		Customer customerDB = customerRepository.getCustomer(customerUsername);
 		int customerId = customerDB.getId();
+
+		logger.info("Getting all active policies from DB");
 		return claimPolicyRepository.findPolicyByStatus(customerId, PolicyStatus.Active);
 	}
 
@@ -61,13 +68,16 @@ public class ClaimPolicyService {
 
 		if (customerPolicy.getPolicyRequestStatus().toString()
 				.equalsIgnoreCase(PolicyRequestStatus.Requested.toString())) {
+			logger.error("Cannot claim this policy as this policy is not approved yet, Exception thrown...");
 			throw new CannotClaimPolicyException("Cannot claim this policy as this policy is not approved yet.");
 		}
 		if (customerPolicy.getPolicyRequestStatus().toString()
 				.equalsIgnoreCase(PolicyRequestStatus.Cancelled.toString())) {
+			logger.error("Cannot claim this policy as this policy is cancelled, Exception thrown...");
 			throw new CannotClaimPolicyException("Cannot claim this policy as this policy is cancelled.");
 		}
 
+		// for changing policy status after claim
 //		Policy policy = policyRepository.findById(policyId).get();
 //		policy.setPolicyStatus(PolicyStatus.Claimed);
 //		policyRepository.save(policy);
@@ -88,6 +98,7 @@ public class ClaimPolicyService {
 		claimPolicy.setClaimStatus(ClaimStatus.Pending);
 		claimPolicy.setCustomerPolicy(customerPolicy);
 
+		logger.info("Adding policy claim details to DB " + claimPolicy);
 		return claimPolicyRepository.save(claimPolicy);
 	}
 
@@ -175,6 +186,8 @@ public class ClaimPolicyService {
 		if (claimPolicy == null)
 			throw new PolicyNotClaimedException("You have not claimed this policy yet.");
 		String claimStatus = claimPolicy.getClaimStatus().toString();
+
+		logger.info("Getting policy claim status from DB " + claimStatus);
 		return claimStatus;
 	}
 

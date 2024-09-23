@@ -2,6 +2,8 @@ package com.automobile.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +26,13 @@ public class RenewPolicyService {
 	@Autowired
 	private PolicyRepository policyRepository;
 
+	private Logger logger = LoggerFactory.getLogger(RenewPolicyService.class);
+
 	public List<Policy> getAllRenewalPolicy(String customerUsername) {
 		Customer customerDB = customerRepository.getCustomer(customerUsername);
 		int customerId = customerDB.getId();
+
+		logger.info("Getting expired policy from DB");
 		return renewalPolicyRepository.findPolicyByStatus(customerId, PolicyStatus.Expired);
 	}
 
@@ -35,6 +41,8 @@ public class RenewPolicyService {
 		int customerId = customerDB.getId();
 		Policy policy = policyRepository.getPolicyByCustomerAndPolicyId(customerId, policyId);
 		policy.setPolicyStatus(PolicyStatus.Active);
+
+		logger.info("Adding updated policy to DB");
 		return policyRepository.save(policy);
 	}
 

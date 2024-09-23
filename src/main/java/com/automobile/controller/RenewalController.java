@@ -22,6 +22,7 @@ public class RenewalController {
 	@Autowired
 	private RenewPolicyService renewPolicyService;
 
+	// API for getting all expired policies
 	@GetMapping("/showAll")
 	public ResponseEntity<?> getAllRenewalPolicy(Principal principal, MessageDto dto) {
 		String customerUsername = principal.getName();
@@ -33,12 +34,11 @@ public class RenewalController {
 		return ResponseEntity.ok(renewalList);
 	}
 
+	// API for renewing a policy
 	@PostMapping("/renew/{policyId}")
-	public Policy renewPolicy(@PathVariable int policyId,Principal principal) {
+	public Policy renewPolicy(@PathVariable int policyId, Principal principal) {
 		String customerUsername = principal.getName();
-		return renewPolicyService.renewPolicy(policyId,customerUsername);
+		return renewPolicyService.renewPolicy(policyId, customerUsername);
 	}
-	
-	
 
 }

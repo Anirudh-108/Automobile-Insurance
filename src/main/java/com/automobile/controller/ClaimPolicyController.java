@@ -27,6 +27,7 @@ public class ClaimPolicyController {
 	@Autowired
 	private ClaimPolicyService claimPolicyService;
 
+	// API for getting all the active policies
 	@GetMapping("/showAll")
 	public ResponseEntity<?> getAllActivePolicy(Principal principal, MessageDto dto) {
 		String customerUsername = principal.getName();
@@ -38,6 +39,7 @@ public class ClaimPolicyController {
 		return ResponseEntity.ok(activeList);
 	}
 
+	// API for claiming a policy by providing Claim documents
 	@PostMapping("/one/{policyId}")
 	public ResponseEntity<?> claimPolicy(@PathVariable int policyId, Principal principal,
 			@RequestBody ClaimDetails claimDetails, MessageDto dto) {

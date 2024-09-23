@@ -12,9 +12,9 @@ public class CustomerDetails {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	private String aadharNumber;
-	private String panNumber;
-	private String drivingLicenceNumber;
+	private String aadharCard;
+	private String panCard;
+	private String drivingLicence;
 
 	@ManyToOne
 	private Customer customer;
@@ -27,28 +27,28 @@ public class CustomerDetails {
 		this.id = id;
 	}
 
-	public String getAadharNumber() {
-		return aadharNumber;
+	public String getAadharCard() {
+		return aadharCard;
 	}
 
-	public void setAadharNumber(String aadharNumber) {
-		this.aadharNumber = aadharNumber;
+	public void setAadharCard(String aadharCard) {
+		this.aadharCard = aadharCard;
 	}
 
-	public String getPanNumber() {
-		return panNumber;
+	public String getPanCard() {
+		return panCard;
 	}
 
-	public void setPanNumber(String panNumber) {
-		this.panNumber = panNumber;
+	public void setPanCard(String panCard) {
+		this.panCard = panCard;
 	}
 
-	public String getDrivingLicenceNumber() {
-		return drivingLicenceNumber;
+	public String getDrivingLicence() {
+		return drivingLicence;
 	}
 
-	public void setDrivingLicenceNumber(String drivingLicenceNumber) {
-		this.drivingLicenceNumber = drivingLicenceNumber;
+	public void setDrivingLicence(String drivingLicence) {
+		this.drivingLicence = drivingLicence;
 	}
 
 	public Customer getCustomer() {
@@ -58,4 +58,11 @@ public class CustomerDetails {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+
+	@Override
+	public String toString() {
+		return "CustomerDetails [id=" + id + ", aadharCard=" + aadharCard + ", panCard=" + panCard + ", drivingLicence="
+				+ drivingLicence + ", customer=" + customer + "]";
+	}
+
 }

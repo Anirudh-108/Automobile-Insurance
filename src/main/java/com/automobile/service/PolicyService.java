@@ -5,6 +5,8 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +42,10 @@ public class PolicyService {
 	@Autowired
 	private CustomerPolicyRepository customerPolicyRepository;
 
+	private Logger logger = LoggerFactory.getLogger(PolicyService.class);
+
 	public Policy addPolicy(Policy policy) {
+		logger.info("Adding policy to DB");
 		return policyRepository.save(policy);
 	}
 
@@ -179,8 +184,8 @@ public class PolicyService {
 		dto.setCoverageAmount(coverageAmount);
 		dto.setTermLength("12 Months");
 
+		logger.info("Showing policy details to user");
 		return dto;
-
 	}
 
 	public Policy getPolicy(Vehicle vehicle, String policyType) {
@@ -196,6 +201,7 @@ public class PolicyService {
 		policy.setTermLength(12);
 		policy.setPolicyStatus(PolicyStatus.Active);
 
+		logger.info("Getting policy details on the basis of vehicle and policyType information");
 		return policy;
 	}
 
@@ -215,6 +221,7 @@ public class PolicyService {
 		customerPolicy.setBuyingDate(LocalDate.now());
 		customerPolicy.setPolicyRequestStatus(PolicyRequestStatus.Requested);
 
+		logger.info("Adding vehicle, policy and customerPolicy details to DB");
 		return customerPolicyRepository.save(customerPolicy);
 	}
 

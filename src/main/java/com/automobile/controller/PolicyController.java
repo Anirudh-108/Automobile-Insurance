@@ -22,11 +22,13 @@ public class PolicyController {
 	@Autowired
 	private PolicyService policyService;
 
+	// API for getting policy details according to vehicle details
 	@GetMapping("/showPolicy/{policyType}")
 	public ShowPolicyDto showPolicy(@RequestBody Vehicle vehicle, @PathVariable String policyType) {
 		return policyService.showPolicy(vehicle, policyType);
 	}
 
+	// API for buying policy according to vehicle details
 	@PostMapping("/buy/{policyType}")
 	public CustomerPolicy buyPolicy(@RequestBody Vehicle vehicle, @PathVariable String policyType,
 			Principal principal) {

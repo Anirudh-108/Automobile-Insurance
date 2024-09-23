@@ -32,6 +32,7 @@ public class SecurityConfig {
                         
                         .requestMatchers("/customer/add").permitAll()
                         .requestMatchers("/customerDetails/add").hasRole("CUSTOMER")
+                        .requestMatchers("/customerDetails/upload/documents").hasRole("CUSTOMER")
                         
                         .requestMatchers("/policy/showPolicy/{policyType}").permitAll()
                         .requestMatchers("/policy/buy/{policyType}").hasRole("CUSTOMER")
