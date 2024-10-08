@@ -28,13 +28,18 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/token").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/auth/signup").permitAll()
                         
                         .requestMatchers("/customer/add").permitAll()
+                        .requestMatchers("/customer/getName/{username}").permitAll()
+                        .requestMatchers("/customer/getCustomer/{username}").permitAll()
+                        
                         .requestMatchers("/customerDetails/add").hasRole("CUSTOMER")
                         .requestMatchers("/customerDetails/upload/documents").hasRole("CUSTOMER")
                         
                         .requestMatchers("/policy/showPolicy/{policyType}").permitAll()
+                        .requestMatchers("/policy/getPolicy/{policyType}").permitAll()
                         .requestMatchers("/policy/buy/{policyType}").hasRole("CUSTOMER")
                         
                         .requestMatchers("/claim/showAll").hasRole("CUSTOMER")

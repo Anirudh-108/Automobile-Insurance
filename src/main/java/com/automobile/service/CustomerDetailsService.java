@@ -44,7 +44,7 @@ public class CustomerDetailsService {
 		return customerDetailsRepository.save(customerDetailsDB);
 	}
 
-	public CustomerDetails uploadAadddharCard(String customerUsername, List<String> fileNamesList) {
+	public CustomerDetails uploadDocuments(String customerUsername, List<String> fileNamesList) {
 		Customer customer = customerRepository.getCustomer(customerUsername);
 
 		CustomerDetails customerDetails = new CustomerDetails();

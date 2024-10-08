@@ -29,6 +29,22 @@ public class Policy {
 //	@Column(columnDefinition = "TEXT")
 //	private String description;
 
+	public Policy() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Policy(int id, PolicyType policyType, double coverageAmount, double premiumAmount, int termLength,
+			PolicyStatus policyStatus) {
+		super();
+		this.id = id;
+		this.policyType = policyType;
+		this.coverageAmount = coverageAmount;
+		this.premiumAmount = premiumAmount;
+		this.termLength = termLength;
+		this.policyStatus = policyStatus;
+	}
+
 	public int getId() {
 		return id;
 	}

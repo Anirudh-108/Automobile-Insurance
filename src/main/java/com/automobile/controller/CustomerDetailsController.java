@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,16 +21,17 @@ import com.automobile.service.CustomerDetailsService;
 
 @RestController
 @RequestMapping("/customerDetails")
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class CustomerDetailsController {
 
 	@Autowired
 	private CustomerDetailsService customerDetailsService;
 
-	@PostMapping("/add")
-	public CustomerDetails addCustomerDetails(@RequestBody CustomerDetails customerDetails, Principal principal) {
-		String customerUsername = principal.getName();
-		return customerDetailsService.addCustomerDetails(customerUsername, customerDetails);
-	}
+//	@PostMapping("/add")
+//	public CustomerDetails addCustomerDetails(@RequestBody CustomerDetails customerDetails, Principal principal) {
+//		String customerUsername = principal.getName();
+//		return customerDetailsService.addCustomerDetails(customerUsername, customerDetails);
+//	}
 
 	@PutMapping("/update")
 	public CustomerDetails updateCustomerDetails(@RequestBody CustomerDetails newCustomerDetails, Principal principal) {
@@ -57,7 +59,7 @@ public class CustomerDetailsController {
 		}
 
 		String customerUsername = principal.getName();
-		return customerDetailsService.uploadAadddharCard(customerUsername, fileNamesList);
+		return customerDetailsService.uploadDocuments(customerUsername, fileNamesList);
 
 	}
 }

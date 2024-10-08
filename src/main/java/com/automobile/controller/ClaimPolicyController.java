@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import com.automobile.service.ClaimPolicyService;
 
 @RestController
 @RequestMapping("/claim")
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class ClaimPolicyController {
 
 	@Autowired
@@ -53,6 +55,7 @@ public class ClaimPolicyController {
 		}
 	}
 
+	// API for checking the claim status of policy
 	@GetMapping("/status/{policyId}")
 	public ResponseEntity<?> claimPolicyStatus(@PathVariable int policyId, Principal principal, MessageDto dto) {
 		String customerUsername = principal.getName();

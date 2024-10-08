@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import com.automobile.service.CustomerService;
 
 @RestController
 @RequestMapping("/customer")
+@CrossOrigin(origins = { "http://localhost:4200" })
 public class CustomerController {
 
 	@Autowired
@@ -52,4 +54,15 @@ public class CustomerController {
 		return customerService.updateCustomer(customerUsername, newCustomer);
 	}
 
+	@GetMapping("/getName/{username}")
+	public MessageDto getNameByUsername(@PathVariable String username, MessageDto dto) {
+		String name = customerService.getNameByUsername(username);
+		dto.setMsg(name);
+		return dto;
+	}
+	
+	@GetMapping("/getCustomer/{username}")
+	public Customer getCustomerByUsername(@PathVariable String username) {
+		return customerService.getCustomerByUsername(username);
+	}
 }

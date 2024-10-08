@@ -84,4 +84,12 @@ public class CustomerService {
 		return customerRepository.save(customerDB);
 	}
 
+	public String getNameByUsername(String username) {
+		return customerRepository.getNameByUsername(username);
+	}
+
+	public Customer getCustomerByUsername(String username) {
+		return customerRepository.getCustomerByUsername(username);
+	}
+
 }

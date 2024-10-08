@@ -182,7 +182,7 @@ public class PolicyService {
 		dto.setPolicyType(PolicyType.valueOf(policyType).toString());
 		dto.setPremiumAmount(premium);
 		dto.setCoverageAmount(coverageAmount);
-		dto.setTermLength("12 Months");
+		dto.setTermLength("12 months");
 
 		logger.info("Showing policy details to user");
 		return dto;

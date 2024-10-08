@@ -1,7 +1,6 @@
 package com.automobile.service;
 
 import java.time.LocalDate;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -63,8 +62,8 @@ public class ClaimPolicyService {
 	public ClaimPolicy claimPolicy(int policyId, String customerUsername, ClaimDetails claimDocuments)
 			throws CannotClaimPolicyException {
 
-		CustomerPolicy customerPolicy = customerPolicyRepository.getCustomerPolicyByPolicyId(policyId,
-				customerUsername);
+		CustomerPolicy customerPolicy = customerPolicyRepository.getCustomerPolicyByPolicyId(policyId, customerUsername)
+				.get();
 
 		if (customerPolicy.getPolicyRequestStatus().toString()
 				.equalsIgnoreCase(PolicyRequestStatus.Requested.toString())) {
@@ -178,13 +177,15 @@ public class ClaimPolicyService {
 	}
 
 	public String claimPolicyStatus(int policyId, String customerUsername) throws PolicyNotClaimedException {
-		CustomerPolicy customerPolicy = customerPolicyRepository.getCustomerPolicyByPolicyId(policyId,
+		Optional<CustomerPolicy> optioanl = customerPolicyRepository.getCustomerPolicyByPolicyId(policyId,
 				customerUsername);
-		int customerPolicyId = customerPolicy.getId();
+
+		int customerPolicyId = optioanl.get().getId();
 
 		ClaimPolicy claimPolicy = claimPolicyRepository.getStatusByCustomerPolicyId(customerPolicyId);
 		if (claimPolicy == null)
 			throw new PolicyNotClaimedException("You have not claimed this policy yet.");
+
 		String claimStatus = claimPolicy.getClaimStatus().toString();
 
 		logger.info("Getting policy claim status from DB " + claimStatus);
