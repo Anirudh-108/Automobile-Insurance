@@ -51,6 +51,12 @@ public class SecurityConfig {
                         
                         .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
                         
+                        
+                        .requestMatchers("/executive/policies/customerId").hasAnyRole("EXECUTIVE", "ADMIN")
+                        .requestMatchers("/executive/policies/status/{policyRequestStatus}").hasAnyRole("EXECUTIVE","ADMIN")
+                        .requestMatchers("/executive/policy/{policyId}/request-status").hasAnyRole("EXECUTIVE", "ADMIN")
+                        .requestMatchers("/executive/claim/status").hasAnyRole("EXECUTIVE","ADMIN")
+                        .requestMatchers("/executive/policy/{claimpolicyId}/status").hasAnyRole("EXECUTIVE","ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
