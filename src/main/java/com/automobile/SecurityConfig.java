@@ -33,10 +33,11 @@ public class SecurityConfig {
                         
                         .requestMatchers("/customer/add").permitAll()
                         .requestMatchers("/customer/getName/{username}").permitAll()
+                        .requestMatchers("/customer/getCustomer/{username}").permitAll()
                         
-                        .requestMatchers("/customerDocuments/customer/documents/upload/{customerId}").hasRole("CUSTOMER")
+                        .requestMatchers("/customerDocuments/upload").permitAll()
                         
-                        .requestMatchers("/vehicleDocuments/vehicle/documents/upload/{customerId}").hasRole("CUSTOMER")
+                        .requestMatchers("/vehicleDocuments/upload/{modelName}").permitAll()
                         
                         .requestMatchers("/complaint/add-complaint/{polcyId}").hasRole("CUSTOMER")
                         .requestMatchers("/complaint/all-complaints").hasRole("CUSTOMER")

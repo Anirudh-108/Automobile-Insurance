@@ -22,9 +22,11 @@ import com.automobile.model.Customer;
 import com.automobile.model.CustomerPolicy;
 import com.automobile.model.Policy;
 import com.automobile.model.Vehicle;
+import com.automobile.model.VehicleDocuments;
 import com.automobile.repository.CustomerPolicyRepository;
 import com.automobile.repository.CustomerRepository;
 import com.automobile.repository.PolicyRepository;
+import com.automobile.repository.VehicleDocumentsRepository;
 import com.automobile.repository.VehicleRepository;
 
 @Service
@@ -41,6 +43,9 @@ public class PolicyService {
 
 	@Autowired
 	private CustomerPolicyRepository customerPolicyRepository;
+
+	@Autowired
+	private VehicleDocumentsRepository vehicleDocumentsRepository;
 
 	private Logger logger = LoggerFactory.getLogger(PolicyService.class);
 
@@ -220,6 +225,12 @@ public class PolicyService {
 		customerPolicy.setPolicy(policy);
 		customerPolicy.setBuyingDate(LocalDate.now());
 		customerPolicy.setPolicyRequestStatus(PolicyRequestStatus.Requested);
+
+//		 For setting vehicle_id in vehicle_document
+		String vehicleDocumentName = "Vehicle RC.pdf";
+		VehicleDocuments vehicleDocument = vehicleDocumentsRepository.getVehicleDocumentsByName(vehicleDocumentName);
+		vehicleDocument.setVehicle(vehicle);
+		vehicleDocumentsRepository.save(vehicleDocument);
 
 		logger.info("Adding vehicle, policy and customerPolicy details to DB");
 		return customerPolicyRepository.save(customerPolicy);

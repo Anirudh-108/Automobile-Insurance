@@ -31,11 +31,11 @@ public class VehicleDocumentsController {
 	@Autowired
 	private VehicleDocumentsService vehicleDocumentsService;
 
-	@PostMapping("/vehicle/documents/upload/{manufacturerName}")
-	public void addCustomerDocuments(@PathVariable String manufacturerName, @RequestParam MultipartFile file,
+	@PostMapping("/upload/{modelName}")
+	public void addVehicleDocuments(@PathVariable String modelName, @RequestParam MultipartFile file,
 			Principal principal) {
 		String customerUsername = principal.getName();
-		Vehicle vehicle = vehicleService.getVehicleByManufacturerName(customerUsername, customerUsername);
+		Vehicle vehicle = vehicleService.getVehicleByModelName(modelName, customerUsername);
 
 		String location = "D:/@Coding/Hexaware Role Based Training/Angular Apps/automobile-insurance/public/vehicle-documents";
 

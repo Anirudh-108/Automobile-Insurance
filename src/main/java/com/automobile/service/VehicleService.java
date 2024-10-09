@@ -15,9 +15,9 @@ public class VehicleService {
 	@Autowired
 	private VehicleRepository vehicleRepository;
 
-	public Vehicle getVehicleByManufacturerName(String manufacturerName, String customerUsername) {
+	public Vehicle getVehicleByModelName(String modelName, String customerUsername) {
 		int custId = customerService.getCustomerByUsername(customerUsername).getId();
-		return vehicleRepository.getVehicleByManufacturerName(custId, manufacturerName);
+		return vehicleRepository.getVehicleByModelName(custId, modelName);
 	}
 
 }
