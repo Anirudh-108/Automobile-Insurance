@@ -33,10 +33,13 @@ public class SecurityConfig {
                         
                         .requestMatchers("/customer/add").permitAll()
                         .requestMatchers("/customer/getName/{username}").permitAll()
-                        .requestMatchers("/customer/getCustomer/{username}").permitAll()
                         
-                        .requestMatchers("/customerDetails/add").hasRole("CUSTOMER")
-                        .requestMatchers("/customerDetails/upload/documents").hasRole("CUSTOMER")
+                        .requestMatchers("/customerDocuments/customer/documents/upload/{customerId}").hasRole("CUSTOMER")
+                        
+                        .requestMatchers("/vehicleDocuments/vehicle/documents/upload/{customerId}").hasRole("CUSTOMER")
+                        
+                        .requestMatchers("/complaint/add-complaint/{polcyId}").hasRole("CUSTOMER")
+                        .requestMatchers("/complaint/all-complaints").hasRole("CUSTOMER")
                         
                         .requestMatchers("/policy/showPolicy/{policyType}").permitAll()
                         .requestMatchers("/policy/getPolicy/{policyType}").permitAll()
@@ -50,7 +53,6 @@ public class SecurityConfig {
                         .requestMatchers("/renewal/renew/{policyId}").hasRole("CUSTOMER")
                         
                         .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
-                        
                         
                         .requestMatchers("/executive/policies/customerId").hasAnyRole("EXECUTIVE", "ADMIN")
                         .requestMatchers("/executive/policies/status/{policyRequestStatus}").hasAnyRole("EXECUTIVE","ADMIN")

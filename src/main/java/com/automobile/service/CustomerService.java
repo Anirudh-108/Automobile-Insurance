@@ -91,5 +91,4 @@ public class CustomerService {
 	public Customer getCustomerByUsername(String username) {
 		return customerRepository.getCustomerByUsername(username);
 	}
-
 }
