@@ -26,6 +26,7 @@ import com.automobile.repository.ClaimDetailsRepository;
 import com.automobile.repository.ClaimPolicyRepository;
 import com.automobile.repository.CustomerPolicyRepository;
 import com.automobile.repository.CustomerRepository;
+import com.automobile.repository.PolicyRepository;
 import com.automobile.repository.VehicleRepository;
 
 @Service
@@ -45,6 +46,9 @@ public class ClaimPolicyService {
 
 	@Autowired
 	private ClaimDetailsRepository claimDetailsRepository;
+	
+	@Autowired
+	private PolicyRepository policyRepository;
 
 	private Logger logger = LoggerFactory.getLogger(ClaimPolicyService.class);
 
@@ -81,10 +85,12 @@ public class ClaimPolicyService {
 //		policy.setPolicyStatus(PolicyStatus.Claimed);
 //		policyRepository.save(policy);
 
-		int customerId = customerPolicy.getCustomer().getId();
+		Customer customer = customerRepository.getCustomer(customerUsername);
+		int customerId = customer.getId();
+		
+		Policy policy=policyRepository.findById(policyId).get();
 
 		double claimAmount = calculateClaimAmount(customerId, claimDocuments);
-		System.out.println(claimAmount);
 
 		claimDocuments = claimDetailsRepository.save(claimDocuments);
 
@@ -95,7 +101,8 @@ public class ClaimPolicyService {
 		claimPolicy.setClaimAmount(claimAmount);
 		claimPolicy.setClaimDate(LocalDate.now());
 		claimPolicy.setClaimStatus(ClaimStatus.Pending);
-		claimPolicy.setCustomerPolicy(customerPolicy);
+		claimPolicy.setCustomer(customer);
+		claimPolicy.setPolicy(policy);
 
 		logger.info("Adding policy claim details to DB " + claimPolicy);
 		return claimPolicyRepository.save(claimPolicy);
@@ -176,11 +183,9 @@ public class ClaimPolicyService {
 		return claimAmount;
 	}
 
-	public String claimPolicyStatus(int policyId, String customerUsername) throws PolicyNotClaimedException {
-		Optional<CustomerPolicy> optioanl = customerPolicyRepository.getCustomerPolicyByPolicyId(policyId,
-				customerUsername);
-
-		int customerPolicyId = optioanl.get().getId();
+	public ClaimPolicy getClaimPolicy(int policyId, String customerUsername) throws PolicyNotClaimedException {
+		Customer customer = customerRepository.getCustomer(customerUsername);
+		int customerId = customer.getId();
 
 		ClaimPolicy claimPolicy = claimPolicyRepository.getStatusByCustomerPolicyId(customerPolicyId);
 		if (claimPolicy == null)
@@ -191,5 +196,11 @@ public class ClaimPolicyService {
 		logger.info("Getting policy claim status from DB " + claimStatus);
 		return claimStatus;
 	}
+
+//	public long getNumberOfClaimsFiled(String customerUsername) {
+//		Customer customer = customerRepository.getCustomer(customerUsername);
+//		int customerId = customer.getId();
+//		return claimPolicyRepository.getNumberOfActivePolicies(customerId);
+//	}
 
 }

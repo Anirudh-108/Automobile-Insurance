@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.automobile.dto.CustomerPolicyDto;
 import com.automobile.enums.ClaimStatus;
 import com.automobile.enums.PolicyRequestStatus;
 import com.automobile.exception.InvalidIdException;
@@ -35,12 +34,12 @@ public class ExecutiveController {
     
     
     //fetch policies by policyRequestStatus
-  	@GetMapping("/policies/status/{policyRequestStatus}")
-    public ResponseEntity<?> getPoliciesByPolicyRequestStatus(@PathVariable PolicyRequestStatus policyRequestStatus) throws InvalidIdException {
-  		List<CustomerPolicyDto> policies = executiveService.getPoliciesByPolicyRequestStatus(policyRequestStatus);
-          return ResponseEntity.ok(policies);
-      }
-  	
+//  	@GetMapping("/policies/status/{policyRequestStatus}")
+//    public ResponseEntity<?> getPoliciesByPolicyRequestStatus(@PathVariable PolicyRequestStatus policyRequestStatus) throws InvalidIdException {
+//  		List<CustomerPolicyForExecutiveDto> policies = executiveService.getPoliciesByPolicyRequestStatus(policyRequestStatus);
+//          return ResponseEntity.ok(policies);
+//      }
+//  	
   	
   	
     //update policy status from CustomerPolicy

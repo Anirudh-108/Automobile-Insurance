@@ -57,16 +57,27 @@ public class ClaimPolicyController {
 
 	// API for checking the claim status of policy
 	@GetMapping("/status/{policyId}")
-	public ResponseEntity<?> claimPolicyStatus(@PathVariable int policyId, Principal principal, MessageDto dto) {
+	public ResponseEntity<?> getClaimPolicy(@PathVariable int policyId, Principal principal, MessageDto dto) {
 		String customerUsername = principal.getName();
-		String claimStatus;
 		try {
-			claimStatus = claimPolicyService.claimPolicyStatus(policyId, customerUsername);
-			dto.setMsg(claimStatus);
+			ClaimPolicy claimPolicy = claimPolicyService.getClaimPolicy(policyId, customerUsername);
+			dto.setMsg("policy claimed");
 			return ResponseEntity.ok(dto);
 		} catch (PolicyNotClaimedException e) {
 			dto.setMsg(e.getMessage());
 			return ResponseEntity.badRequest().body(dto);
 		}
 	}
+	
+//	@GetMapping("/getNumberOfClaimsFiled")
+//	public MessageDto getNumberOfClaimsFiled(Principal principal, MessageDto dto) {
+//		String customerUsername = principal.getName();
+//		long activeNo = claimPolicyService.getNumberOfClaimsFiled(customerUsername);
+//		dto.setMsg(String.valueOf(activeNo));
+//		return dto;
+//	}
+	
+	
+	
+	
 }

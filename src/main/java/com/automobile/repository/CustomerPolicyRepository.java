@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.automobile.dto.CustomerPolicyDto;
 import com.automobile.enums.PolicyRequestStatus;
 import com.automobile.model.CustomerPolicy;
 import com.automobile.model.Executive;
@@ -19,13 +18,21 @@ public interface CustomerPolicyRepository extends JpaRepository<CustomerPolicy, 
 	Optional<CustomerPolicy> getCustomerPolicyByPolicyId(int policyId, String customerUsername);
 
 	List<CustomerPolicy> findByCustomerId(int customerId);
-	
-	List<CustomerPolicyDto> findByPolicyRequestStatus(PolicyRequestStatus policyRequestStatus);
-	
-	@Modifying
-	//@Query("update customer_policy cp set cp.policy_request_status = ? , cp.updated_by = ?, where cp.id = ?", nativeQuery = true)
-	@Query("UPDATE CustomerPolicy cp SET cp.policyRequestStatus = :policyRequestStatus, cp.updatedBy = :executive WHERE cp.id = :policyId")
-    CustomerPolicy updatePolicyRequestStatus(@Param("policyId") int policyId, @Param("policyRequestStatus") PolicyRequestStatus policyRequestStatus, @Param("executive") Executive executive);
+
 	
 
+	// Executive module query
+	@Modifying
+	// @Query("update customer_policy cp set cp.policy_request_status = ? ,
+	// cp.updated_by = ?, where cp.id = ?", nativeQuery = true)
+	@Query("UPDATE CustomerPolicy cp SET cp.policyRequestStatus = :policyRequestStatus, cp.updatedBy = :executive WHERE cp.id = :policyId")
+	CustomerPolicy updatePolicyRequestStatus(@Param("policyId") int policyId,
+			@Param("policyRequestStatus") PolicyRequestStatus policyRequestStatus,
+			@Param("executive") Executive executive);
+
+	@Query("select cp from CustomerPolicy cp JOIN cp.policy p where cp.customer.id=?1 AND p.policyStatus='Active'")
+	List<CustomerPolicy> getAllActiveCustomerPolicies(int custId);
+
+	@Query("select cp from CustomerPolicy cp JOIN cp.policy p where cp.customer.id=?1 AND p.id=?2")
+	CustomerPolicy getActivePolicyByPolicyId(int custId, int policyId);
 }

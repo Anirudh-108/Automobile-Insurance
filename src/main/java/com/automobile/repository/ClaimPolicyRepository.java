@@ -32,5 +32,10 @@ public interface ClaimPolicyRepository extends JpaRepository<ClaimPolicy, Intege
 	//@Query(value = "update claim_policy clmp set clmp.claimStatus = ?, clmp.executive= ? where clmp.id = ?", nativeQuery = true)
 	@Query("UPDATE ClaimPolicy cp SET cp.claimStatus = :claimStatus, cp.executive = :executive WHERE cp.id = :claimpolicyId")
 	ClaimPolicy updateClaimStatus(@Param("claimpolicyId") int claimpolicyId, @Param("claimStatus") ClaimStatus claimStatus, @Param("executive") Executive executive);
+
+	
+//	//jyfjygjygy
+//	@Query("select COUNT(cp) from CustomerPolicy cp JOIN cp.policy p where cp.customer.id=?1 AND p.policyStatus='Expired'")
+//	long getNumberOfActivePolicies(int customerId);
 	
 }

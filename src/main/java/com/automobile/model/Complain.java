@@ -13,7 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Complaint {
+public class Complain {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;

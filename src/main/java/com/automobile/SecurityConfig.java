@@ -32,6 +32,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/signup").permitAll()
                         
                         .requestMatchers("/customer/add").permitAll()
+                        .requestMatchers("/customer/update").permitAll()
                         .requestMatchers("/customer/getName/{username}").permitAll()
                         .requestMatchers("/customer/getCustomer/{username}").permitAll()
                         
@@ -39,12 +40,18 @@ public class SecurityConfig {
                         
                         .requestMatchers("/vehicleDocuments/upload/{modelName}").permitAll()
                         
-                        .requestMatchers("/complaint/add-complaint/{polcyId}").hasRole("CUSTOMER")
-                        .requestMatchers("/complaint/all-complaints").hasRole("CUSTOMER")
+                        .requestMatchers("/complaint/add-complaint/{polcyId}").permitAll()
+                        .requestMatchers("/complaint/all-complaints").permitAll()
                         
                         .requestMatchers("/policy/showPolicy/{policyType}").permitAll()
                         .requestMatchers("/policy/getPolicy/{policyType}").permitAll()
-                        .requestMatchers("/policy/buy/{policyType}").hasRole("CUSTOMER")
+                        .requestMatchers("/policy/buy/{policyType}").permitAll()
+                        .requestMatchers("/policy/getAllActivePolicies").permitAll()
+                        .requestMatchers("/policy/getActivePolicy/{policyId}").permitAll()
+                        .requestMatchers("/policy/getNumberOfActivePolicies").permitAll()
+                        .requestMatchers("/policy/getNumberOfExpiredPolicies").permitAll()
+                        
+                        
                         
                         .requestMatchers("/claim/showAll").hasRole("CUSTOMER")
                         .requestMatchers("/claim/one/{policyId}").hasRole("CUSTOMER")

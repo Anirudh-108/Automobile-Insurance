@@ -28,7 +28,7 @@ public class Vehicle {
 	private String variant;
 	private int yearOfPurchase;
 	private double basePrice;
-	private boolean previousClaim;
+	private String previousClaim;
 	private String registrationNo;
 
 	@Enumerated(EnumType.STRING)
@@ -41,9 +41,7 @@ public class Vehicle {
 	private VehicleCondition vehicleCondition;
 
 	@Enumerated(EnumType.STRING)
-	private ZoneType zoneType;	
-
-	// private String photosOfVehicle;
+	private ZoneType zoneType;
 
 	@ManyToOne
 	private Customer customer;
@@ -128,11 +126,11 @@ public class Vehicle {
 		this.zoneType = zoneType;
 	}
 
-	public boolean isPreviousClaim() {
+	public String getPreviousClaim() {
 		return previousClaim;
 	}
 
-	public void setPreviousClaim(boolean previousClaim) {
+	public void setPreviousClaim(String previousClaim) {
 		this.previousClaim = previousClaim;
 	}
 
@@ -164,9 +162,9 @@ public class Vehicle {
 	public String toString() {
 		return "Vehicle [id=" + id + ", vehicleType=" + vehicleType + ", manufacturerName=" + manufacturerName
 				+ ", modelName=" + modelName + ", variant=" + variant + ", yearOfPurchase=" + yearOfPurchase
-				+ ", basePrice=" + basePrice + ", fuelType=" + fuelType + ", transmissionType=" + transmissionType
-				+ ", vehicleCondition=" + vehicleCondition + ", zoneType=" + zoneType + ", previousClaim="
-				+ previousClaim + ", registrationNo=" + registrationNo + ", customer=" + customer + "]";
+				+ ", basePrice=" + basePrice + ", previousClaim=" + previousClaim + ", registrationNo=" + registrationNo
+				+ ", fuelType=" + fuelType + ", transmissionType=" + transmissionType + ", vehicleCondition="
+				+ vehicleCondition + ", zoneType=" + zoneType + ", customer=" + customer + "]";
 	}
 
 }
