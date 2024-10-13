@@ -47,15 +47,16 @@ public class SecurityConfig {
                         .requestMatchers("/policy/getPolicy/{policyType}").permitAll()
                         .requestMatchers("/policy/buy/{policyType}").permitAll()
                         .requestMatchers("/policy/getAllActivePolicies").permitAll()
+                        .requestMatchers("/policy/getAllExpiredPolicies").permitAll()
                         .requestMatchers("/policy/getActivePolicy/{policyId}").permitAll()
                         .requestMatchers("/policy/getNumberOfActivePolicies").permitAll()
                         .requestMatchers("/policy/getNumberOfExpiredPolicies").permitAll()
                         
-                        
-                        
                         .requestMatchers("/claim/showAll").hasRole("CUSTOMER")
                         .requestMatchers("/claim/one/{policyId}").hasRole("CUSTOMER")
-                        .requestMatchers("/claim/status/{policyId}").hasRole("CUSTOMER")
+                        .requestMatchers("/claim/all-claims").permitAll()
+                        .requestMatchers("/claim/getNumberOfClaimsFiled").permitAll()
+                        
                         
                         .requestMatchers("/renewal/showAll").hasRole("CUSTOMER")
                         .requestMatchers("/renewal/renew/{policyId}").hasRole("CUSTOMER")

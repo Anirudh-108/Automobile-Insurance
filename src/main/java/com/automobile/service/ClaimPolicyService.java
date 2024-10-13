@@ -1,21 +1,24 @@
 package com.automobile.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.automobile.dto.ClaimPolicyDto;
 import com.automobile.enums.ClaimStatus;
 import com.automobile.enums.PolicyRequestStatus;
 import com.automobile.enums.PolicyStatus;
 import com.automobile.enums.VehicleClaimCondition;
 import com.automobile.enums.VehicleType;
 import com.automobile.exception.CannotClaimPolicyException;
-import com.automobile.exception.PolicyNotClaimedException;
 import com.automobile.model.ClaimDetails;
 import com.automobile.model.ClaimPolicy;
 import com.automobile.model.Customer;
@@ -46,7 +49,7 @@ public class ClaimPolicyService {
 
 	@Autowired
 	private ClaimDetailsRepository claimDetailsRepository;
-	
+
 	@Autowired
 	private PolicyRepository policyRepository;
 
@@ -63,7 +66,7 @@ public class ClaimPolicyService {
 		return claimPolicyRepository.findPolicyByStatus(customerId, PolicyStatus.Active);
 	}
 
-	public ClaimPolicy claimPolicy(int policyId, String customerUsername, ClaimDetails claimDocuments)
+	public ClaimPolicy claimPolicy(int policyId, String customerUsername, ClaimDetails claimDetails)
 			throws CannotClaimPolicyException {
 
 		CustomerPolicy customerPolicy = customerPolicyRepository.getCustomerPolicyByPolicyId(policyId, customerUsername)
@@ -86,17 +89,17 @@ public class ClaimPolicyService {
 //		policyRepository.save(policy);
 
 		Customer customer = customerRepository.getCustomer(customerUsername);
-		int customerId = customer.getId();
-		
-		Policy policy=policyRepository.findById(policyId).get();
+//		int customerId = customer.getId();
 
-		double claimAmount = calculateClaimAmount(customerId, claimDocuments);
+		Policy policy = policyRepository.findById(policyId).get();
 
-		claimDocuments = claimDetailsRepository.save(claimDocuments);
+		double claimAmount = calculateClaimAmount(policy, claimDetails);
+
+		claimDetails = claimDetailsRepository.save(claimDetails);
 
 		ClaimPolicy claimPolicy = new ClaimPolicy();
 
-		claimPolicy.setClaimDocuments(claimDocuments);
+		claimPolicy.setClaimDocuments(claimDetails);
 
 		claimPolicy.setClaimAmount(claimAmount);
 		claimPolicy.setClaimDate(LocalDate.now());
@@ -142,13 +145,9 @@ public class ClaimPolicyService {
 	}
 
 	// Final claim amount calculation
-	public double calculateClaimAmount(int customerId, ClaimDetails claimDetails) {
+	public double calculateClaimAmount(Policy policy, ClaimDetails claimDetails) {
 
-		Optional<Customer> optional = customerRepository.findById(customerId);
-		Customer customer = optional.get();
-		int custId = customer.getId();
-
-		Vehicle vehicle = vehicleRepository.getVehicleByRegistrationNo(custId, claimDetails.getRegistrationNo());
+		Vehicle vehicle = policy.getVehicle();
 
 		int currentYear = LocalDate.now().getYear();
 		int vehicleAge = currentYear - vehicle.getYearOfPurchase();
@@ -183,24 +182,55 @@ public class ClaimPolicyService {
 		return claimAmount;
 	}
 
-	public ClaimPolicy getClaimPolicy(int policyId, String customerUsername) throws PolicyNotClaimedException {
+	public Page<ClaimPolicyDto> getAllClaims(String customerUsername, Pageable pageable) {
 		Customer customer = customerRepository.getCustomer(customerUsername);
 		int customerId = customer.getId();
+		Page<ClaimPolicy> claimPolicyList = claimPolicyRepository.getAllClaims(customerId, pageable);
 
-		ClaimPolicy claimPolicy = claimPolicyRepository.getStatusByCustomerPolicyId(customerPolicyId);
-		if (claimPolicy == null)
-			throw new PolicyNotClaimedException("You have not claimed this policy yet.");
+		List<ClaimPolicyDto> dtoList = new ArrayList<>();
 
-		String claimStatus = claimPolicy.getClaimStatus().toString();
+		for (ClaimPolicy c : claimPolicyList) {
+			ClaimPolicyDto dto = new ClaimPolicyDto();
 
-		logger.info("Getting policy claim status from DB " + claimStatus);
-		return claimStatus;
+			dto.setClaimId(c.getId());
+			dto.setClaimAmount(c.getClaimAmount());
+			dto.setClaimDate(c.getClaimDate().toString());
+			dto.setClaimStatus(c.getClaimStatus().toString());
+			dto.setPolicyType(c.getPolicy().getPolicyType().toString());
+			dto.setPolicyCoverageAmount(c.getPolicy().getCoverageAmount());
+			dto.setRegistrationNo(c.getPolicy().getVehicle().getRegistrationNo());
+
+			String vehicleName = c.getPolicy().getVehicle().getManufacturerName() + " "
+					+ c.getPolicy().getVehicle().getModelName();
+
+			dto.setVehicleName(vehicleName);
+
+			dtoList.add(dto);
+		}
+		// dtoList.size()+1 -> it is required to make pagination work properly
+		Page<ClaimPolicyDto> pages = new PageImpl<ClaimPolicyDto>(dtoList, pageable, dtoList.size() + 1);
+
+		return pages;
 	}
 
-//	public long getNumberOfClaimsFiled(String customerUsername) {
+	public long getNumberOfClaimsFiled(String customerUsername) {
+		Customer customer = customerRepository.getCustomer(customerUsername);
+		int customerId = customer.getId();
+		return claimPolicyRepository.getNumberOfActivePolicies(customerId);
+	}
+
+//	public ClaimPolicy getClaimPolicy(int policyId, String customerUsername) throws PolicyNotClaimedException {
 //		Customer customer = customerRepository.getCustomer(customerUsername);
 //		int customerId = customer.getId();
-//		return claimPolicyRepository.getNumberOfActivePolicies(customerId);
+//
+//		ClaimPolicy claimPolicy = claimPolicyRepository.getStatusByCustomerPolicyId(customerPolicyId);
+//		if (claimPolicy == null)
+//			throw new PolicyNotClaimedException("You have not claimed this policy yet.");
+//
+//		String claimStatus = claimPolicy.getClaimStatus().toString();
+//
+//		logger.info("Getting policy claim status from DB " + claimStatus);
+//		return claimStatus;
 //	}
 
 }

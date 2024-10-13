@@ -4,6 +4,9 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.automobile.dto.ClaimPolicyDto;
 import com.automobile.dto.MessageDto;
 import com.automobile.exception.CannotClaimPolicyException;
-import com.automobile.exception.PolicyNotClaimedException;
 import com.automobile.model.ClaimDetails;
 import com.automobile.model.ClaimPolicy;
 import com.automobile.model.Policy;
@@ -23,7 +27,7 @@ import com.automobile.service.ClaimPolicyService;
 
 @RestController
 @RequestMapping("/claim")
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = { "http://localhost:4200" })
 public class ClaimPolicyController {
 
 	@Autowired
@@ -55,29 +59,21 @@ public class ClaimPolicyController {
 		}
 	}
 
-	// API for checking the claim status of policy
-	@GetMapping("/status/{policyId}")
-	public ResponseEntity<?> getClaimPolicy(@PathVariable int policyId, Principal principal, MessageDto dto) {
+	@GetMapping("/all-claims")
+	public Page<ClaimPolicyDto> getAllClaims(@RequestParam(defaultValue = "0", required = false) Integer page,
+			@RequestParam(defaultValue = "100000", required = false) Integer size, Principal principal) {
 		String customerUsername = principal.getName();
-		try {
-			ClaimPolicy claimPolicy = claimPolicyService.getClaimPolicy(policyId, customerUsername);
-			dto.setMsg("policy claimed");
-			return ResponseEntity.ok(dto);
-		} catch (PolicyNotClaimedException e) {
-			dto.setMsg(e.getMessage());
-			return ResponseEntity.badRequest().body(dto);
-		}
+
+		Pageable pageable = PageRequest.of(page, size);
+		return claimPolicyService.getAllClaims(customerUsername, pageable);
 	}
-	
-//	@GetMapping("/getNumberOfClaimsFiled")
-//	public MessageDto getNumberOfClaimsFiled(Principal principal, MessageDto dto) {
-//		String customerUsername = principal.getName();
-//		long activeNo = claimPolicyService.getNumberOfClaimsFiled(customerUsername);
-//		dto.setMsg(String.valueOf(activeNo));
-//		return dto;
-//	}
-	
-	
-	
-	
+
+	@GetMapping("/getNumberOfClaimsFiled")
+	public MessageDto getNumberOfClaimsFiled(Principal principal, MessageDto dto) {
+		String customerUsername = principal.getName();
+		long activeNo = claimPolicyService.getNumberOfClaimsFiled(customerUsername);
+		dto.setMsg(String.valueOf(activeNo));
+		return dto;
+	}
+
 }

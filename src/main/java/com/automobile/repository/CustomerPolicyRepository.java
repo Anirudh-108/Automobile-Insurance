@@ -33,6 +33,11 @@ public interface CustomerPolicyRepository extends JpaRepository<CustomerPolicy, 
 	@Query("select cp from CustomerPolicy cp JOIN cp.policy p where cp.customer.id=?1 AND p.policyStatus='Active'")
 	List<CustomerPolicy> getAllActiveCustomerPolicies(int custId);
 
+	@Query("select cp from CustomerPolicy cp JOIN cp.policy p where cp.customer.id=?1 AND p.policyStatus='Expired'")
+	List<CustomerPolicy> getAllExpiredPolicies(int customerId);
+	
 	@Query("select cp from CustomerPolicy cp JOIN cp.policy p where cp.customer.id=?1 AND p.id=?2")
 	CustomerPolicy getActivePolicyByPolicyId(int custId, int policyId);
+
+	
 }

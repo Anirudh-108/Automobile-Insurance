@@ -2,12 +2,13 @@ package com.automobile.repository;
 
 import java.util.List;
 
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.automobile.enums.ClaimStatus;
 import com.automobile.enums.PolicyStatus;
@@ -21,21 +22,22 @@ public interface ClaimPolicyRepository extends JpaRepository<ClaimPolicy, Intege
 	@Query("select p from CustomerPolicy cp JOIN cp.policy p JOIN cp.customer c where c.id=?1 and p.policyStatus=?2")
 	List<Policy> findPolicyByStatus(int customerId, PolicyStatus active);
 
-	@Query("select clmp from ClaimPolicy clmp JOIN clmp.customerPolicy cp where cp.id=?1")
-	ClaimPolicy getStatusByCustomerPolicyId(int customerPolicyId);
-
-	//@Query((value = "select clmp from claim_policy clmp where clmp.claim_status  = '?' ", nativeQuery = true)
+	// @Query((value = "select clmp from claim_policy clmp where clmp.claim_status =
+	// '?' ", nativeQuery = true)
 	@Query("select clmp from ClaimPolicy clmp where clmp.claimStatus = :claimStatus")
 	List<ClaimPolicy> findByclaimStatus(ClaimStatus claimStatus);
 
 	@Modifying
-	//@Query(value = "update claim_policy clmp set clmp.claimStatus = ?, clmp.executive= ? where clmp.id = ?", nativeQuery = true)
+	// @Query(value = "update claim_policy clmp set clmp.claimStatus = ?,
+	// clmp.executive= ? where clmp.id = ?", nativeQuery = true)
 	@Query("UPDATE ClaimPolicy cp SET cp.claimStatus = :claimStatus, cp.executive = :executive WHERE cp.id = :claimpolicyId")
-	ClaimPolicy updateClaimStatus(@Param("claimpolicyId") int claimpolicyId, @Param("claimStatus") ClaimStatus claimStatus, @Param("executive") Executive executive);
+	ClaimPolicy updateClaimStatus(@Param("claimpolicyId") int claimpolicyId,
+			@Param("claimStatus") ClaimStatus claimStatus, @Param("executive") Executive executive);
 
-	
-//	//jyfjygjygy
-//	@Query("select COUNT(cp) from CustomerPolicy cp JOIN cp.policy p where cp.customer.id=?1 AND p.policyStatus='Expired'")
-//	long getNumberOfActivePolicies(int customerId);
-	
+	@Query("select cp from ClaimPolicy cp where cp.customer.id=?1")
+	Page<ClaimPolicy> getAllClaims(int customerId, Pageable pageable);
+
+	@Query("select COUNT(cp) from ClaimPolicy cp where cp.customer.id=?1")
+	long getNumberOfActivePolicies(int customerId);
+
 }

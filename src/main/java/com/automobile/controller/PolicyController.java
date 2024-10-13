@@ -52,6 +52,12 @@ public class PolicyController {
 		String customerUsername = principal.getName();
 		return policyService.getAllActivePolicies(customerUsername);
 	}
+	
+	@GetMapping("/getAllExpiredPolicies")
+	public List<CustomerPolicyDto> getAllExpiredPolicies(Principal principal) {
+		String customerUsername = principal.getName();
+		return policyService.getAllExpiredPolicies(customerUsername);
+	}
 
 	@GetMapping("/getActivePolicy/{policyId}")
 	public CustomerPolicyDto getActivePolicyByPolicyId(@PathVariable int policyId, Principal principal) {
@@ -66,6 +72,10 @@ public class PolicyController {
 		dto.setMsg(String.valueOf(activeNo));
 		return dto;
 	}
+	
+	
+	
+	
 	
 	@GetMapping("/getNumberOfExpiredPolicies")
 	public MessageDto getNumberOfExpiredPolicies(Principal principal, MessageDto dto) {

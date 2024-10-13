@@ -34,7 +34,7 @@ public class ComplainController {
 	}
 
 	@GetMapping("/all-complaints")
-	public Page<ComplainDto> getAllProducts(@RequestParam(defaultValue = "0", required = false) Integer page,
+	public Page<ComplainDto> getAllComplaints(@RequestParam(defaultValue = "0", required = false) Integer page,
 			@RequestParam(defaultValue = "100000", required = false) Integer size,Principal principal) {
 		String customerUsername = principal.getName();
 		
