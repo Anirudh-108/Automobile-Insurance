@@ -30,6 +30,9 @@ public class CustomerPolicy {
 
 	@Enumerated(EnumType.STRING)
 	private PolicyRequestStatus policyRequestStatus;
+	
+	@ManyToOne
+	private Executive updatedBy;
 
 	public int getId() {
 		return id;
@@ -71,10 +74,22 @@ public class CustomerPolicy {
 		this.policyRequestStatus = policyRequestStatus;
 	}
 
+	public Executive getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(Executive updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
 	@Override
 	public String toString() {
 		return "CustomerPolicy [id=" + id + ", customer=" + customer + ", policy=" + policy + ", buyingDate="
-				+ buyingDate + ", policyRequestStatus=" + policyRequestStatus + "]";
+				+ buyingDate + ", policyRequestStatus=" + policyRequestStatus + ", updatedBy=" + updatedBy + "]";
 	}
+
+
+	
+
 
 }

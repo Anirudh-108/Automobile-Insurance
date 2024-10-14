@@ -11,10 +11,16 @@ public class PolicyAddOns {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
+
 	@ManyToOne
 	private Policy policy;
-	
+
 	@ManyToOne
 	private AddOns addOns;
+
+	@Override
+	public String toString() {
+		return "PolicyAddOns [id=" + id + ", policy=" + policy + ", addOns=" + addOns + "]";
+	}
+
 }

@@ -12,12 +12,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class ClaimDocuments {
+public class ClaimDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	private LocalDate dateOfIncident;
+	private String registrationNo;
 	private String driverLicenceNo;
 	private String firCopy;
 	private String videoProofOfDamage;
@@ -82,12 +83,20 @@ public class ClaimDocuments {
 		this.damageCostEstimate = damageCostEstimate;
 	}
 
+	public String getRegistrationNo() {
+		return registrationNo;
+	}
+
+	public void setRegistrationNo(String registrationNo) {
+		this.registrationNo = registrationNo;
+	}
+
 	@Override
 	public String toString() {
-		return "ClaimDocuments [id=" + id + ", dateOfIncident=" + dateOfIncident + ", driverLicenceNo="
-				+ driverLicenceNo + ", firCopy=" + firCopy + ", videoProofOfDamage=" + videoProofOfDamage
-				+ ", damageCostEstimate=" + damageCostEstimate + ", vehicleClaimCondition=" + vehicleClaimCondition
-				+ "]";
+		return "ClaimDetails [id=" + id + ", dateOfIncident=" + dateOfIncident + ", registrationNo=" + registrationNo
+				+ ", driverLicenceNo=" + driverLicenceNo + ", firCopy=" + firCopy + ", videoProofOfDamage="
+				+ videoProofOfDamage + ", damageCostEstimate=" + damageCostEstimate + ", vehicleClaimCondition="
+				+ vehicleClaimCondition + "]";
 	}
 
 }

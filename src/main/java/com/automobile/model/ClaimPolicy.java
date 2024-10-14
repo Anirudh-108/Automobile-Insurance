@@ -10,6 +10,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -25,10 +27,17 @@ public class ClaimPolicy {
 	private ClaimStatus claimStatus;
 
 	@OneToOne
-	private CustomerPolicy customerPolicy;
+	private Customer customer;
 
 	@OneToOne
-	private ClaimDocuments claimDocuments;
+	private Policy policy;
+
+	@OneToOne
+	private ClaimDetails claimDocuments;
+
+	@ManyToOne
+	@JoinColumn(name = "executive_id")
+	private Executive executive;
 
 	public int getId() {
 		return id;
@@ -62,26 +71,43 @@ public class ClaimPolicy {
 		this.claimStatus = claimStatus;
 	}
 
-	public CustomerPolicy getCustomerPolicy() {
-		return customerPolicy;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setCustomerPolicy(CustomerPolicy customerPolicy) {
-		this.customerPolicy = customerPolicy;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
-	public ClaimDocuments getClaimDocuments() {
+	public Policy getPolicy() {
+		return policy;
+	}
+
+	public void setPolicy(Policy policy) {
+		this.policy = policy;
+	}
+
+	public ClaimDetails getClaimDocuments() {
 		return claimDocuments;
 	}
 
-	public void setClaimDocuments(ClaimDocuments claimDocuments) {
+	public void setClaimDocuments(ClaimDetails claimDocuments) {
 		this.claimDocuments = claimDocuments;
+	}
+
+	public Executive getExecutive() {
+		return executive;
+	}
+
+	public void setExecutive(Executive executive) {
+		this.executive = executive;
 	}
 
 	@Override
 	public String toString() {
 		return "ClaimPolicy [id=" + id + ", claimAmount=" + claimAmount + ", claimDate=" + claimDate + ", claimStatus="
-				+ claimStatus + ", customerPolicy=" + customerPolicy + ", claimDocuments=" + claimDocuments + "]";
+				+ claimStatus + ", customer=" + customer + ", policy=" + policy + ", claimDocuments=" + claimDocuments
+				+ ", executive=" + executive + "]";
 	}
 
 }

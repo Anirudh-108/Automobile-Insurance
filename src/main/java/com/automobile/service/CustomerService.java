@@ -3,6 +3,8 @@ package com.automobile.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,8 @@ public class CustomerService {
 	@Autowired
 	private AddressRepository addressRepository;
 
+	private Logger logger = LoggerFactory.getLogger(CustomerService.class);
+
 	public Customer addCustomer(Customer customer) {
 		UserInfo userInfo = customer.getUser();
 		userInfo.setRole("ROLE_CUSTOMER");
@@ -41,17 +45,22 @@ public class CustomerService {
 		address = addressRepository.save(address);
 		customer.setAddress(address);
 
+		logger.info("Adding customer to DB");
 		return customerRepository.save(customer);
 	}
 
 	public List<Customer> getAllCustomers() {
+		logger.info("Getting all customers from DB");
 		return customerRepository.findAll();
 	}
 
 	public Customer getCustomerById(int customerId) throws InvalidIdException {
 		Optional<Customer> optional = customerRepository.findById(customerId);
-		if (optional.isEmpty())
+		if (optional.isEmpty()) {
+			logger.error("Invalid customer ID found in request, Exception thrown...");
 			throw new InvalidIdException("Given Customer Id is Invalid");
+		}
+		logger.info("Getting customer by ID from DB");
 		return optional.get();
 	}
 
@@ -71,7 +80,15 @@ public class CustomerService {
 		addressDB = addressRepository.save(addressDB);
 		customerDB.setAddress(addressDB);
 
+		logger.info("Adding update customer to DB");
 		return customerRepository.save(customerDB);
 	}
 
+	public String getNameByUsername(String username) {
+		return customerRepository.getNameByUsername(username);
+	}
+
+	public Customer getCustomerByUsername(String username) {
+		return customerRepository.getCustomerByUsername(username);
+	}
 }

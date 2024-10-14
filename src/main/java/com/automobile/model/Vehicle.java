@@ -1,5 +1,7 @@
 package com.automobile.model;
 
+import com.automobile.enums.FuelType;
+import com.automobile.enums.TransmissionType;
 import com.automobile.enums.VehicleCondition;
 import com.automobile.enums.VehicleType;
 import com.automobile.enums.ZoneType;
@@ -24,26 +26,22 @@ public class Vehicle {
 	private String manufacturerName;
 	private String modelName;
 	private String variant;
-	private int manufacturingYear;
+	private int yearOfPurchase;
 	private double basePrice;
+	private String previousClaim;
+	private String registrationNo;
+
 	@Enumerated(EnumType.STRING)
-	private String fuelType;
-	
+	private FuelType fuelType;
+
 	@Enumerated(EnumType.STRING)
-	private String transmissionType;
+	private TransmissionType transmissionType;
 
 	@Enumerated(EnumType.STRING)
 	private VehicleCondition vehicleCondition;
 
 	@Enumerated(EnumType.STRING)
 	private ZoneType zoneType;
-
-	private boolean previousClaim;
-
-	private String registrationNo;
-	private int yearOfPurchase;
-	
-	// private String photosOfVehicle;
 
 	@ManyToOne
 	private Customer customer;
@@ -88,14 +86,6 @@ public class Vehicle {
 		this.variant = variant;
 	}
 
-	public int getManufacturingYear() {
-		return manufacturingYear;
-	}
-
-	public void setManufacturingYear(int manufacturingYear) {
-		this.manufacturingYear = manufacturingYear;
-	}
-
 	public double getBasePrice() {
 		return basePrice;
 	}
@@ -104,19 +94,19 @@ public class Vehicle {
 		this.basePrice = basePrice;
 	}
 
-	public String getFuelType() {
+	public FuelType getFuelType() {
 		return fuelType;
 	}
 
-	public void setFuelType(String fuelType) {
+	public void setFuelType(FuelType fuelType) {
 		this.fuelType = fuelType;
 	}
 
-	public String getTransmissionType() {
+	public TransmissionType getTransmissionType() {
 		return transmissionType;
 	}
 
-	public void setTransmissionType(String transmissionType) {
+	public void setTransmissionType(TransmissionType transmissionType) {
 		this.transmissionType = transmissionType;
 	}
 
@@ -136,20 +126,12 @@ public class Vehicle {
 		this.zoneType = zoneType;
 	}
 
-	public boolean isPreviousClaim() {
+	public String getPreviousClaim() {
 		return previousClaim;
 	}
 
-	public void setPreviousClaim(boolean previousClaim) {
+	public void setPreviousClaim(String previousClaim) {
 		this.previousClaim = previousClaim;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
 	}
 
 	public String getRegistrationNo() {
@@ -168,6 +150,21 @@ public class Vehicle {
 		this.yearOfPurchase = yearOfPurchase;
 	}
 
-	
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	@Override
+	public String toString() {
+		return "Vehicle [id=" + id + ", vehicleType=" + vehicleType + ", manufacturerName=" + manufacturerName
+				+ ", modelName=" + modelName + ", variant=" + variant + ", yearOfPurchase=" + yearOfPurchase
+				+ ", basePrice=" + basePrice + ", previousClaim=" + previousClaim + ", registrationNo=" + registrationNo
+				+ ", fuelType=" + fuelType + ", transmissionType=" + transmissionType + ", vehicleCondition="
+				+ vehicleCondition + ", zoneType=" + zoneType + ", customer=" + customer + "]";
+	}
 
 }
