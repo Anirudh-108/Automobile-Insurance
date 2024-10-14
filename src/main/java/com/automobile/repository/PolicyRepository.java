@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.automobile.model.Policy;
+import com.automobile.model.Vehicle;
 
 @Repository
 public interface PolicyRepository extends JpaRepository<Policy, Integer> {
@@ -17,5 +18,8 @@ public interface PolicyRepository extends JpaRepository<Policy, Integer> {
 
 	@Query("select COUNT(cp) from CustomerPolicy cp JOIN cp.policy p where cp.customer.id=?1 AND p.policyStatus='Expired'")
 	long getNumberOfExpiredPolicies(int customerId);
+
+	@Query("select p.vehicle from Policy p where p.id=?1")
+	Vehicle getVehicleByPolicyId(int policyId);
 
 }

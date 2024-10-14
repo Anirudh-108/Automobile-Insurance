@@ -14,19 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.automobile.dto.MessageDto;
 import com.automobile.model.Policy;
-import com.automobile.repository.PolicyRepository;
 import com.automobile.service.RenewPolicyService;
 
 @RestController
 @RequestMapping("/renewal")
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = { "http://localhost:4200" })
 public class RenewalController {
 
 	@Autowired
 	private RenewPolicyService renewPolicyService;
-
-	@Autowired
-	private PolicyRepository policyRepository;
 
 	// API for getting all expired policies
 	@GetMapping("/showAll")
@@ -43,12 +39,13 @@ public class RenewalController {
 	// API for renewing a policy
 	@PostMapping("/renew/{policyId}")
 	public ResponseEntity<?> renewPolicy(@PathVariable int policyId, Principal principal, MessageDto dto) {
+
+//		String policyStatus = policyRepository.findById(policyId).get().getPolicyStatus().toString();
+//		if (policyStatus.equals("Active")) {
+//			dto.setMsg("This policy is not expired yet, you can't renew it now.");
+//			return ResponseEntity.badRequest().body(dto);
+//		}
 		String customerUsername = principal.getName();
-		String policyStatus = policyRepository.findById(policyId).get().getPolicyStatus().toString();
-		if (policyStatus.equals("Active")) {
-			dto.setMsg("This policy is not expired yet, you can't renew it now.");
-			return ResponseEntity.badRequest().body(dto);
-		}
 		Policy policy = renewPolicyService.renewPolicy(policyId, customerUsername);
 		return ResponseEntity.ok(policy);
 	}

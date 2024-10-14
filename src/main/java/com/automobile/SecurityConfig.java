@@ -36,9 +36,11 @@ public class SecurityConfig {
                         .requestMatchers("/customer/getName/{username}").permitAll()
                         .requestMatchers("/customer/getCustomer/{username}").permitAll()
                         
+                        .requestMatchers("/vehicle/add").permitAll()
+                        
                         .requestMatchers("/customerDocuments/upload").permitAll()
                         
-                        .requestMatchers("/vehicleDocuments/upload/{modelName}").permitAll()
+                        .requestMatchers("/vehicleDocuments/upload/{registrationNo}").permitAll()
                         
                         .requestMatchers("/complaint/add-complaint/{polcyId}").permitAll()
                         .requestMatchers("/complaint/all-complaints").permitAll()
@@ -51,15 +53,16 @@ public class SecurityConfig {
                         .requestMatchers("/policy/getActivePolicy/{policyId}").permitAll()
                         .requestMatchers("/policy/getNumberOfActivePolicies").permitAll()
                         .requestMatchers("/policy/getNumberOfExpiredPolicies").permitAll()
+                        .requestMatchers("/policy/getVehicleByPolicyId/{policyId}").permitAll()
+                        .requestMatchers("/policy/getPolicyById/{policyId}").permitAll()
                         
                         .requestMatchers("/claim/showAll").hasRole("CUSTOMER")
                         .requestMatchers("/claim/one/{policyId}").hasRole("CUSTOMER")
                         .requestMatchers("/claim/all-claims").permitAll()
-                        .requestMatchers("/claim/getNumberOfClaimsFiled").permitAll()
-                        
+                        .requestMatchers("/claim/getNumberOfClaimsFiled").permitAll()  
                         
                         .requestMatchers("/renewal/showAll").hasRole("CUSTOMER")
-                        .requestMatchers("/renewal/renew/{policyId}").hasRole("CUSTOMER")
+                        .requestMatchers("/renewal/renew/{policyId}").permitAll()
                         
                         .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
                         

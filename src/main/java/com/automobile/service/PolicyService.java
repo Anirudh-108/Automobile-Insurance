@@ -23,7 +23,6 @@ import com.automobile.model.Customer;
 import com.automobile.model.CustomerPolicy;
 import com.automobile.model.Policy;
 import com.automobile.model.Vehicle;
-import com.automobile.model.VehicleDocuments;
 import com.automobile.repository.CustomerPolicyRepository;
 import com.automobile.repository.CustomerRepository;
 import com.automobile.repository.PolicyRepository;
@@ -213,13 +212,16 @@ public class PolicyService {
 
 	public CustomerPolicy buyPolicy(String customerUsername, Policy policy, Vehicle vehicle) {
 		Customer customer = customerRepository.getCustomer(customerUsername);
+		int customerId = customer.getId();
 
-		vehicle.setCustomer(customer);
-		vehicleRepository.save(vehicle);
+//		vehicle.setCustomer(customer);
+//		vehicleRepository.save(vehicle);
+
+		Vehicle vehicle1 = vehicleRepository.getVehicleByRegistrationNo(customerId, vehicle.getRegistrationNo());
 
 		policy = addPolicy(policy);
 		policy.setPolicyStatus(PolicyStatus.Active);
-		policy.setVehicle(vehicle);
+		policy.setVehicle(vehicle1);
 		policyRepository.save(policy);
 
 		CustomerPolicy customerPolicy = new CustomerPolicy();
@@ -229,10 +231,10 @@ public class PolicyService {
 		customerPolicy.setPolicyRequestStatus(PolicyRequestStatus.Requested);
 
 //		 For setting vehicle_id in vehicle_document
-		String vehicleDocumentName = "Vehicle RC.pdf";
-		VehicleDocuments vehicleDocument = vehicleDocumentsRepository.getVehicleDocumentsByName(vehicleDocumentName);
-		vehicleDocument.setVehicle(vehicle);
-		vehicleDocumentsRepository.save(vehicleDocument);
+//		String vehicleDocumentName = "Vehicle RC.pdf";
+//		VehicleDocuments vehicleDocument = vehicleDocumentsRepository.getVehicleDocumentsByName(vehicleDocumentName);
+//		vehicleDocument.setVehicle(vehicle);
+//		vehicleDocumentsRepository.save(vehicleDocument);
 
 		logger.info("Adding vehicle, policy and customerPolicy details to DB");
 		return customerPolicyRepository.save(customerPolicy);
@@ -346,5 +348,13 @@ public class PolicyService {
 		Customer customer = customerRepository.getCustomer(customerUsername);
 		int customerId = customer.getId();
 		return policyRepository.getNumberOfExpiredPolicies(customerId);
+	}
+
+	public Vehicle getVehicleByPolicyId(String customerUsername, int policyId) {
+		return policyRepository.getVehicleByPolicyId(policyId);
+	}
+
+	public Policy getPolicyById(String customerUsername, int policyId) {
+		return policyRepository.findById(policyId).get();
 	}
 }
