@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-<<<<<<< HEAD
 import java.util.List;
 import java.util.Optional;
 
@@ -13,11 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-=======
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,26 +28,14 @@ import com.automobile.service.VehicleService;
 @RequestMapping("/vehicleDocuments")
 @CrossOrigin(origins = { "http://localhost:4200" })
 public class VehicleDocumentsController {
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 	@Autowired
 	private VehicleService vehicleService;
 
 	@Autowired
 	private VehicleDocumentsService vehicleDocumentsService;
 
-<<<<<<< HEAD
-	@PostMapping("/upload/{modelName}")
-	public void addVehicleDocuments(@PathVariable String modelName, @RequestParam MultipartFile file,
-			Principal principal) {
-		String customerUsername = principal.getName();
-		Vehicle vehicle = vehicleService.getVehicleByModelName(modelName, customerUsername);
 
-		String location = "E:/Angular-App/public/VehicleDocuments";
-=======
 	@PostMapping("/upload/{registrationNo}")
 	public void addVehicleDocuments(@PathVariable String registrationNo, @RequestParam MultipartFile file,
 			Principal principal) {
@@ -61,7 +43,7 @@ public class VehicleDocumentsController {
 		Vehicle vehicle = vehicleService.getVehicleByRegistrationNo(registrationNo, customerUsername);
 
 		String location = "D:/@Coding/Hexaware Role Based Training/Angular Apps/automobile-insurance/public/vehicle-documents";
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
+
 
 		VehicleDocuments vehicleDocuments = new VehicleDocuments();
 
@@ -76,7 +58,8 @@ public class VehicleDocumentsController {
 			e.printStackTrace();
 		}
 	}
-<<<<<<< HEAD
+	
+
 	
 	 // API to get document by vehicle id
     @GetMapping("/vehicle/{vehicleId}/documents")
@@ -93,9 +76,7 @@ public class VehicleDocumentsController {
     
 
 }
-=======
 
-}
 
 //	@PutMapping("/update")
 //	public CustomerDocuments updateCustomerDetails(@RequestBody CustomerDocuments newCustomerDetails,
@@ -133,4 +114,3 @@ public class VehicleDocumentsController {
 //		return customerDetailsService.uploadDocuments(customerUsername, fileNamesList);
 //
 //	}
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005

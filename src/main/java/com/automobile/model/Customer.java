@@ -22,11 +22,8 @@ public class Customer {
 	private String contact;
 
 	@OneToOne
-<<<<<<< HEAD
 	private UserInfo userInfo;
-=======
-	private UserInfo user;
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
+
 
 	@ManyToOne
 	private Address address;
@@ -63,23 +60,14 @@ public class Customer {
 		this.contact = contact;
 	}
 
-<<<<<<< HEAD
+
 	public UserInfo getUserInfo() {
 		return userInfo;
 	}
 
 	public void setUserInfo(UserInfo userInfo) {
 		this.userInfo = userInfo;
-=======
-	public UserInfo getUser() {
-		return user;
 	}
-
-	public void setUser(UserInfo user) {
-		this.user = user;
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
-	}
-
 	public Address getAddress() {
 		return address;
 	}
@@ -90,17 +78,8 @@ public class Customer {
 
 	@Override
 	public String toString() {
-<<<<<<< HEAD
 		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", contact=" + contact + ", userInfo="
 				+ userInfo + ", address=" + address + "]";
 	}
 
-	
-
-=======
-		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", contact=" + contact + ", user=" + user
-				+ ", address=" + address + "]";
-	}
-
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 }

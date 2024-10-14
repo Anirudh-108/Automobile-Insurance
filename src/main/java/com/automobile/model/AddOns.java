@@ -67,14 +67,6 @@ public class AddOns {
 	public void setPolicy(Policy policy) {
 		this.policy = policy;
 	}
-<<<<<<< HEAD
-=======
 
-	@Override
-	public String toString() {
-		return "AddOns [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", benefits=" + benefits + ", policy=" + policy + "]";
-	}
 
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 }

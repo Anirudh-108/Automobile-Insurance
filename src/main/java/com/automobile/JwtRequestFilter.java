@@ -11,10 +11,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.automobile.service.MyUserDetailsService;
 
-<<<<<<< HEAD
+
 import io.jsonwebtoken.ExpiredJwtException;
-=======
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
+
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,16 +40,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
-<<<<<<< HEAD
+
             try {
                 username = jwtUtil.extractUsername(jwt);
             } catch (ExpiredJwtException e) {
                 System.out.println("JWT Token has expired");
                 // Optionally handle expired token here (e.g., allow public endpoints to continue)
             }
-=======
+
             username = jwtUtil.extractUsername(jwt);
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
+
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

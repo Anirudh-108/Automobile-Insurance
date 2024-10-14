@@ -23,11 +23,7 @@ import com.automobile.service.CustomerService;
 @RequestMapping("/customerDocuments")
 @CrossOrigin(origins = { "http://localhost:4200" })
 public class CustomerDocumentsController {
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 	@Autowired
 	private CustomerService customerService;
 
@@ -39,11 +35,7 @@ public class CustomerDocumentsController {
 		String customerUsername = principal.getName();
 		Customer customer = customerService.getCustomerByUsername(customerUsername);
 
-<<<<<<< HEAD
-		String location = "E:/Angular-App/public/CustomerDocuments";
-=======
 		String location = "D:/@Coding/Hexaware Role Based Training/Angular Apps/automobile-insurance/public/customer-documents";
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 
 		CustomerDocuments customerDocuments = new CustomerDocuments();
 
@@ -60,8 +52,6 @@ public class CustomerDocumentsController {
 	}
 
 }
-<<<<<<< HEAD
-=======
 
 //	@PutMapping("/update")
 //	public CustomerDocuments updateCustomerDetails(@RequestBody CustomerDocuments newCustomerDetails,
@@ -99,4 +89,4 @@ public class CustomerDocumentsController {
 //		return customerDetailsService.uploadDocuments(customerUsername, fileNamesList);
 //
 //	}
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
+

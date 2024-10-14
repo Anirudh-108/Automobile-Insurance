@@ -5,18 +5,9 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-=======
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.automobile.dto.CustomerPolicyDto;
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 import com.automobile.dto.ShowPolicyDto;
 import com.automobile.enums.FuelType;
 import com.automobile.enums.PolicyRequestStatus;
@@ -29,10 +20,7 @@ import com.automobile.model.Customer;
 import com.automobile.model.CustomerPolicy;
 import com.automobile.model.Policy;
 import com.automobile.model.Vehicle;
-<<<<<<< HEAD
 import com.automobile.model.VehicleDocuments;
-=======
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 import com.automobile.repository.CustomerPolicyRepository;
 import com.automobile.repository.CustomerRepository;
 import com.automobile.repository.PolicyRepository;
@@ -47,12 +35,9 @@ public class PolicyService {
 
 	@Autowired
 	private VehicleRepository vehicleRepository;
-<<<<<<< HEAD
 	
 	@Autowired
 	private VehicleDocumentsRepository vehicleDocumentsRepository;
-=======
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -60,17 +45,7 @@ public class PolicyService {
 	@Autowired
 	private CustomerPolicyRepository customerPolicyRepository;
 
-<<<<<<< HEAD
 	public Policy addPolicy(Policy policy) {
-=======
-	@Autowired
-	private VehicleDocumentsRepository vehicleDocumentsRepository;
-
-	private Logger logger = LoggerFactory.getLogger(PolicyService.class);
-
-	public Policy addPolicy(Policy policy) {
-		logger.info("Adding policy to DB");
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 		return policyRepository.save(policy);
 	}
 
@@ -152,11 +127,7 @@ public class PolicyService {
 			evDiscount = basePremium * 0.10; // EV
 		}
 
-<<<<<<< HEAD
 		if (vehicle.isPreviousClaim()) {
-=======
-		if (vehicle.getPreviousClaim().equalsIgnoreCase("Yes")) {
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 			previousClaimsSurcharge = basePremium * 0.20; // previous claims
 		}
 
@@ -211,17 +182,10 @@ public class PolicyService {
 		dto.setPolicyType(PolicyType.valueOf(policyType).toString());
 		dto.setPremiumAmount(premium);
 		dto.setCoverageAmount(coverageAmount);
-<<<<<<< HEAD
 		dto.setTermLength("12 Months");
 
 		return dto;
 
-=======
-		dto.setTermLength("12 months");
-
-		logger.info("Showing policy details to user");
-		return dto;
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 	}
 
 	public Policy getPolicy(Vehicle vehicle, String policyType) {
@@ -237,7 +201,6 @@ public class PolicyService {
 		policy.setTermLength(12);
 		policy.setPolicyStatus(PolicyStatus.Active);
 
-<<<<<<< HEAD
 		return policy;
 	}
 
@@ -269,24 +232,6 @@ public class PolicyService {
 		policy = addPolicy(policy);
 		policy.setPolicyStatus(PolicyStatus.Active);
 		policy.setVehicle(vehicle);
-=======
-		logger.info("Getting policy details on the basis of vehicle and policyType information");
-		return policy;
-	}
-
-	public CustomerPolicy buyPolicy(String customerUsername, Policy policy, Vehicle vehicle) {
-		Customer customer = customerRepository.getCustomer(customerUsername);
-		int customerId = customer.getId();
-
-//		vehicle.setCustomer(customer);
-//		vehicleRepository.save(vehicle);
-
-		Vehicle vehicle1 = vehicleRepository.getVehicleByRegistrationNo(customerId, vehicle.getRegistrationNo());
-
-		policy = addPolicy(policy);
-		policy.setPolicyStatus(PolicyStatus.Active);
-		policy.setVehicle(vehicle1);
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 		policyRepository.save(policy);
 
 		CustomerPolicy customerPolicy = new CustomerPolicy();
@@ -296,7 +241,6 @@ public class PolicyService {
 		customerPolicy.setPolicyRequestStatus(PolicyRequestStatus.Requested);
 
 //		 For setting vehicle_id in vehicle_document
-<<<<<<< HEAD
 		String vehicleDocumentName = "Vehicle RC.pdf";
 		VehicleDocuments vehicleDocument = vehicleDocumentsRepository.getVehicleDocumentsByName(vehicleDocumentName);
 		vehicleDocument.setVehicle(vehicle);
@@ -306,132 +250,4 @@ public class PolicyService {
 		return customerPolicyRepository.save(customerPolicy);
 	}
 
-=======
-//		String vehicleDocumentName = "Vehicle RC.pdf";
-//		VehicleDocuments vehicleDocument = vehicleDocumentsRepository.getVehicleDocumentsByName(vehicleDocumentName);
-//		vehicleDocument.setVehicle(vehicle);
-//		vehicleDocumentsRepository.save(vehicleDocument);
-
-		logger.info("Adding vehicle, policy and customerPolicy details to DB");
-		return customerPolicyRepository.save(customerPolicy);
-	}
-
-//	policyList.stream().forEach(p->{
-//	List<CustomerPolicy> cpList=customerPolicyList.stream().filter(cp->cp.getPolicy().getId()==p.getId()).toList();
-//	vehicleList.stream().filter(v)
-//});
-
-	public List<CustomerPolicyDto> getAllActivePolicies(String customerUsername) {
-		Customer customer = customerRepository.getCustomer(customerUsername);
-		int customerId = customer.getId();
-
-		List<CustomerPolicyDto> dtoList = new ArrayList<>();
-
-		List<CustomerPolicy> customerPolicyList = customerPolicyRepository.getAllActiveCustomerPolicies(customerId);
-
-		for (CustomerPolicy cp : customerPolicyList) {
-			CustomerPolicyDto dto = new CustomerPolicyDto();
-
-			dto.setBuyingDate(cp.getBuyingDate());
-			dto.setPolicyRequestStatus(cp.getPolicyRequestStatus().toString());
-
-			dto.setPolicyId(cp.getPolicy().getId());
-			dto.setPolicyType(cp.getPolicy().getPolicyType().toString());
-			dto.setCoverageAmount(cp.getPolicy().getCoverageAmount());
-			dto.setPremiumAmount(cp.getPolicy().getPremiumAmount());
-			dto.setTermLength(cp.getPolicy().getTermLength());
-			dto.setPolicyStatus(cp.getPolicy().getPolicyStatus().toString());
-
-			dto.setVehicleType(cp.getPolicy().getVehicle().getVehicleType().toString());
-			dto.setManufacturerName(cp.getPolicy().getVehicle().getManufacturerName());
-			dto.setModelName(cp.getPolicy().getVehicle().getModelName());
-			dto.setVariant(cp.getPolicy().getVehicle().getVariant());
-			dto.setBasePrice(cp.getPolicy().getVehicle().getBasePrice());
-			dto.setRegistrationNo(cp.getPolicy().getVehicle().getRegistrationNo());
-
-			dtoList.add(dto);
-		}
-		return dtoList;
-	}
-
-	public List<CustomerPolicyDto> getAllExpiredPolicies(String customerUsername) {
-		Customer customer = customerRepository.getCustomer(customerUsername);
-		int customerId = customer.getId();
-
-		List<CustomerPolicyDto> dtoList = new ArrayList<>();
-
-		List<CustomerPolicy> customerPolicyList = customerPolicyRepository.getAllExpiredPolicies(customerId);
-
-		for (CustomerPolicy cp : customerPolicyList) {
-			CustomerPolicyDto dto = new CustomerPolicyDto();
-
-			dto.setBuyingDate(cp.getBuyingDate());
-			dto.setPolicyRequestStatus(cp.getPolicyRequestStatus().toString());
-
-			dto.setPolicyId(cp.getPolicy().getId());
-			dto.setPolicyType(cp.getPolicy().getPolicyType().toString());
-			dto.setCoverageAmount(cp.getPolicy().getCoverageAmount());
-			dto.setPremiumAmount(cp.getPolicy().getPremiumAmount());
-			dto.setTermLength(cp.getPolicy().getTermLength());
-			dto.setPolicyStatus(cp.getPolicy().getPolicyStatus().toString());
-
-			dto.setVehicleType(cp.getPolicy().getVehicle().getVehicleType().toString());
-			dto.setManufacturerName(cp.getPolicy().getVehicle().getManufacturerName());
-			dto.setModelName(cp.getPolicy().getVehicle().getModelName());
-			dto.setVariant(cp.getPolicy().getVehicle().getVariant());
-			dto.setBasePrice(cp.getPolicy().getVehicle().getBasePrice());
-			dto.setRegistrationNo(cp.getPolicy().getVehicle().getRegistrationNo());
-
-			dtoList.add(dto);
-		}
-		return dtoList;
-	}
-
-	public CustomerPolicyDto getActivePolicyByPolicyId(String customerUsername, int policyId) {
-		Customer customer = customerRepository.getCustomer(customerUsername);
-		int customerId = customer.getId();
-		CustomerPolicy cp = customerPolicyRepository.getActivePolicyByPolicyId(customerId, policyId);
-
-		CustomerPolicyDto dto = new CustomerPolicyDto();
-
-		dto.setBuyingDate(cp.getBuyingDate());
-		dto.setPolicyRequestStatus(cp.getPolicyRequestStatus().toString());
-
-		dto.setPolicyId(cp.getPolicy().getId());
-		dto.setPolicyType(cp.getPolicy().getPolicyType().toString());
-		dto.setCoverageAmount(cp.getPolicy().getCoverageAmount());
-		dto.setPremiumAmount(cp.getPolicy().getPremiumAmount());
-		dto.setTermLength(cp.getPolicy().getTermLength());
-		dto.setPolicyStatus(cp.getPolicy().getPolicyStatus().toString());
-
-		dto.setVehicleType(cp.getPolicy().getVehicle().getVehicleType().toString());
-		dto.setManufacturerName(cp.getPolicy().getVehicle().getManufacturerName());
-		dto.setModelName(cp.getPolicy().getVehicle().getModelName());
-		dto.setVariant(cp.getPolicy().getVehicle().getVariant());
-		dto.setBasePrice(cp.getPolicy().getVehicle().getBasePrice());
-		dto.setRegistrationNo(cp.getPolicy().getVehicle().getRegistrationNo());
-
-		return dto;
-	}
-
-	public long getNumberOfActivePolicies(String customerUsername) {
-		Customer customer = customerRepository.getCustomer(customerUsername);
-		int customerId = customer.getId();
-		return policyRepository.getNumberOfActivePolicies(customerId);
-	}
-
-	public long getNumberOfExpiredPolicies(String customerUsername) {
-		Customer customer = customerRepository.getCustomer(customerUsername);
-		int customerId = customer.getId();
-		return policyRepository.getNumberOfExpiredPolicies(customerId);
-	}
-
-	public Vehicle getVehicleByPolicyId(String customerUsername, int policyId) {
-		return policyRepository.getVehicleByPolicyId(policyId);
-	}
-
-	public Policy getPolicyById(String customerUsername, int policyId) {
-		return policyRepository.findById(policyId).get();
-	}
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 }

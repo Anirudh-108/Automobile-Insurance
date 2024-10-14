@@ -28,11 +28,8 @@ public class Vehicle {
 	private String variant;
 	private int yearOfPurchase;
 	private double basePrice;
-<<<<<<< HEAD
 	private boolean previousClaim;
-=======
-	private String previousClaim;
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
+
 	private String registrationNo;
 
 	@Enumerated(EnumType.STRING)
@@ -45,13 +42,9 @@ public class Vehicle {
 	private VehicleCondition vehicleCondition;
 
 	@Enumerated(EnumType.STRING)
-<<<<<<< HEAD
 	private ZoneType zoneType;	
 
-	// private String photosOfVehicle;
-=======
-	private ZoneType zoneType;
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
+
 
 	@ManyToOne
 	private Customer customer;
@@ -136,21 +129,11 @@ public class Vehicle {
 		this.zoneType = zoneType;
 	}
 
-<<<<<<< HEAD
+
 	public boolean isPreviousClaim() {
 		return previousClaim;
 	}
 
-	public void setPreviousClaim(boolean previousClaim) {
-=======
-	public String getPreviousClaim() {
-		return previousClaim;
-	}
-
-	public void setPreviousClaim(String previousClaim) {
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
-		this.previousClaim = previousClaim;
-	}
 
 	public String getRegistrationNo() {
 		return registrationNo;
@@ -180,15 +163,10 @@ public class Vehicle {
 	public String toString() {
 		return "Vehicle [id=" + id + ", vehicleType=" + vehicleType + ", manufacturerName=" + manufacturerName
 				+ ", modelName=" + modelName + ", variant=" + variant + ", yearOfPurchase=" + yearOfPurchase
-<<<<<<< HEAD
-				+ ", basePrice=" + basePrice + ", fuelType=" + fuelType + ", transmissionType=" + transmissionType
-				+ ", vehicleCondition=" + vehicleCondition + ", zoneType=" + zoneType + ", previousClaim="
-				+ previousClaim + ", registrationNo=" + registrationNo + ", customer=" + customer + "]";
-=======
 				+ ", basePrice=" + basePrice + ", previousClaim=" + previousClaim + ", registrationNo=" + registrationNo
 				+ ", fuelType=" + fuelType + ", transmissionType=" + transmissionType + ", vehicleCondition="
 				+ vehicleCondition + ", zoneType=" + zoneType + ", customer=" + customer + "]";
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
+
 	}
 
 }

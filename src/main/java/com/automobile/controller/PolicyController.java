@@ -1,15 +1,14 @@
 package com.automobile.controller;
 
 import java.security.Principal;
-<<<<<<< HEAD
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-=======
+
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-<<<<<<< HEAD
-=======
 import com.automobile.dto.CustomerPolicyDto;
 import com.automobile.dto.MessageDto;
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 import com.automobile.dto.ShowPolicyDto;
 import com.automobile.model.CustomerPolicy;
 import com.automobile.model.Policy;
@@ -30,33 +26,26 @@ import com.automobile.service.PolicyService;
 
 @RestController
 @RequestMapping("/policy")
-<<<<<<< HEAD
-=======
 @CrossOrigin(origins = { "http://localhost:4200" })
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 public class PolicyController {
 	@Autowired
 	private PolicyService policyService;
 
-<<<<<<< HEAD
+
 	@GetMapping("/showPolicy/{policyType}")
-=======
+
 	// API for getting policy details according to vehicle details
 	@PostMapping("/showPolicy/{policyType}")
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 	public ShowPolicyDto showPolicy(@RequestBody Vehicle vehicle, @PathVariable String policyType) {
 		return policyService.showPolicy(vehicle, policyType);
 	}
 
-<<<<<<< HEAD
-=======
 	@PostMapping("/getPolicy/{policyType}")
 	public Policy getPolicy(@RequestBody Vehicle vehicle, @PathVariable String policyType) {
 		return policyService.getPolicy(vehicle, policyType);
 	}
 
 	// API for buying policy according to vehicle details
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 	@PostMapping("/buy/{policyType}")
 	public CustomerPolicy buyPolicy(@RequestBody Vehicle vehicle, @PathVariable String policyType,
 			Principal principal) {
@@ -64,8 +53,6 @@ public class PolicyController {
 		Policy policy = policyService.getPolicy(vehicle, policyType);
 		return policyService.buyPolicy(customerUsername, policy, vehicle);
 	}
-<<<<<<< HEAD
-=======
 
 	@GetMapping("/getAllActivePolicies")
 	public List<CustomerPolicyDto> getAllActivePolicies(Principal principal) {
@@ -113,7 +100,5 @@ public class PolicyController {
 		return policyService.getPolicyById(customerUsername,policyId);
 	}
 	
-	
 
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 }

@@ -27,7 +27,6 @@ public class ClaimPolicy {
 	private ClaimStatus claimStatus;
 
 	@OneToOne
-<<<<<<< HEAD
 	private CustomerPolicy customerPolicy;
 
 	@OneToOne
@@ -36,19 +35,6 @@ public class ClaimPolicy {
 	@ManyToOne
     @JoinColumn(name = "executive_id") 
     private Executive executive;
-=======
-	private Customer customer;
-
-	@OneToOne
-	private Policy policy;
-
-	@OneToOne
-	private ClaimDetails claimDocuments;
-
-	@ManyToOne
-	@JoinColumn(name = "executive_id")
-	private Executive executive;
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 
 	public int getId() {
 		return id;
@@ -82,29 +68,12 @@ public class ClaimPolicy {
 		this.claimStatus = claimStatus;
 	}
 
-<<<<<<< HEAD
 	public CustomerPolicy getCustomerPolicy() {
 		return customerPolicy;
 	}
 
 	public void setCustomerPolicy(CustomerPolicy customerPolicy) {
 		this.customerPolicy = customerPolicy;
-=======
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-	public Policy getPolicy() {
-		return policy;
-	}
-
-	public void setPolicy(Policy policy) {
-		this.policy = policy;
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 	}
 
 	public ClaimDetails getClaimDocuments() {
@@ -126,17 +95,10 @@ public class ClaimPolicy {
 	@Override
 	public String toString() {
 		return "ClaimPolicy [id=" + id + ", claimAmount=" + claimAmount + ", claimDate=" + claimDate + ", claimStatus="
-<<<<<<< HEAD
 				+ claimStatus + ", customerPolicy=" + customerPolicy + ", claimDocuments=" + claimDocuments
 				+ ", executive=" + executive + "]";
 	}
 
 	
 
-=======
-				+ claimStatus + ", customer=" + customer + ", policy=" + policy + ", claimDocuments=" + claimDocuments
-				+ ", executive=" + executive + "]";
-	}
-
->>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 }
