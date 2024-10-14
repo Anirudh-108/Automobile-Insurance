@@ -1,5 +1,6 @@
 package com.automobile.service;
 
+<<<<<<< HEAD
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
@@ -8,12 +9,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+=======
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 import org.springframework.stereotype.Service;
 
 import com.automobile.enums.ClaimStatus;
 import com.automobile.enums.PolicyRequestStatus;
 import com.automobile.exception.InvalidIdException;
 import com.automobile.model.ClaimPolicy;
+<<<<<<< HEAD
 import com.automobile.model.Complaint;
 import com.automobile.model.CustomerPolicy;
 import com.automobile.model.Executive;
@@ -25,13 +33,27 @@ import com.automobile.repository.CustomerPolicyRepository;
 import com.automobile.repository.ExecutiveClaimRepository;
 import com.automobile.repository.ExecutiveRepository;
 import com.automobile.repository.UserRepository;
+=======
+import com.automobile.model.CustomerPolicy;
+import com.automobile.model.Executive;
+import com.automobile.model.ExecutiveClaim;
+import com.automobile.repository.ClaimPolicyRepository;
+import com.automobile.repository.CustomerPolicyRepository;
+import com.automobile.repository.ExecutiveClaimRepository;
+import com.automobile.repository.ExecutiveRepository;
+
+import jakarta.transaction.Transactional;
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 
 @Service
 public class ExecutiveService {
 
 	@Autowired
 	private CustomerPolicyRepository customerPolicyRepository;
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 
 	@Autowired
 	private ExecutiveRepository executiveRepository;
@@ -41,6 +63,7 @@ public class ExecutiveService {
 
 	@Autowired
 	private ExecutiveClaimRepository executiveClaimRepository;
+<<<<<<< HEAD
 	
 	@Autowired
 	public ComplaintRepository complaintRepository;
@@ -53,6 +76,8 @@ public class ExecutiveService {
 		return customerPolicyRepository.findAll(pageable);
 		
 	}
+=======
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 
 	// Fetch list of policies for a particular customer
 	public List<CustomerPolicy> getPoliciesByCustomerId(int customerId) throws InvalidIdException {
@@ -62,6 +87,7 @@ public class ExecutiveService {
 		}
 		return customerPolicies;
 	}
+<<<<<<< HEAD
 	
 	// Fetch details of a policy by policy id
 	public CustomerPolicy getPolicyDetails(int policyId) throws InvalidIdException {
@@ -107,6 +133,39 @@ public class ExecutiveService {
 	}
 
 	// fetch claims by claim status
+=======
+
+	// fetch policies based on the request status (Approved, Requested, Cancelled)
+//	public List<CustomerPolicyForExecutiveDto> getPoliciesByPolicyRequestStatus(PolicyRequestStatus policyRequestStatus)
+//			throws InvalidIdException {
+//
+//		// Fetch policies by the provided status
+//		List<CustomerPolicyForExecutiveDto> policies = customerPolicyRepository
+//				.findByPolicyRequestStatus(policyRequestStatus);
+//
+//		if (policies.isEmpty()) {
+//			throw new InvalidIdException("No policies found with status: " + policyRequestStatus);
+//		}
+//		return policies;
+//	}
+
+	// Update the policy request status from CustomerPolicy (Requested to Approved
+	// or Cancelled)
+	@Transactional
+	public CustomerPolicy updatePolicyRequestStatus(int policyId, PolicyRequestStatus policyRequestStatus,
+			int executiveId) throws InvalidIdException {
+		CustomerPolicy customerPolicy = customerPolicyRepository.findById(policyId)
+				.orElseThrow(() -> new RuntimeException("Policy not found with id: " + policyId));
+
+		Executive executive = executiveRepository.findById(executiveId)
+				.orElseThrow(() -> new InvalidIdException("Executive not found with id: " + executiveId));
+
+		customerPolicy.setPolicyRequestStatus(policyRequestStatus);
+		customerPolicy.setUpdatedBy(executive);
+		return customerPolicyRepository.save(customerPolicy);
+	}
+
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 	public List<ClaimPolicy> getClaimsByClaimStatus(ClaimStatus claimStatus) throws InvalidIdException {
 		List<ClaimPolicy> claims = claimPolicyRepository.findByclaimStatus(claimStatus);
 
@@ -116,6 +175,7 @@ public class ExecutiveService {
 		return claims;
 	}
 
+<<<<<<< HEAD
 	// update policy claimStatus (Pending to Approved or Denied)
 	public ClaimPolicy updateClaimStatus(int claimPolicyId, ClaimStatus claimStatus, int executiveId)
 			throws InvalidIdException {
@@ -132,13 +192,33 @@ public class ExecutiveService {
 
 		claimPolicy.setClaimStatus(claimStatus);
 		claimPolicy.setExecutive(executive);
+=======
+	@Transactional
+	public ClaimPolicy updateClaimStatus(int claimpolicyId, ClaimStatus claimStatus, int executiveId)
+			throws InvalidIdException {
+		// Fetch the claim policy
+		ClaimPolicy claimPolicy = claimPolicyRepository.findById(claimpolicyId)
+				.orElseThrow(() -> new InvalidIdException("Claim policy not found"));
+
+		Executive executive = executiveRepository.findById(executiveId)
+				.orElseThrow(() -> new InvalidIdException("Executive not found"));
+
+		// Update the claim status in the ClaimPolicy
+		claimPolicy.setClaimStatus(claimStatus);
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 		claimPolicyRepository.save(claimPolicy);
 
 		// Create a new ExecutiveClaim and store the executive ID along with the updated
 		// claim status
 		ExecutiveClaim executiveClaim = new ExecutiveClaim();
+<<<<<<< HEAD
 		executiveClaim.setClaimPolicy(claimPolicy);
 		executiveClaim.setClaimStatus(claimPolicy.getClaimStatus());
+=======
+		executiveClaim.setClaimStatus(claimStatus);
+		executiveClaim.setClaimPolicy(claimPolicy);
+		;
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 		executiveClaim.setExecutive(executive); // Set the executive who made the update
 		executiveClaim.setUpdateDate(LocalDate.now());
 
@@ -147,6 +227,7 @@ public class ExecutiveService {
 
 		return claimPolicy;
 	}
+<<<<<<< HEAD
 	
     // Method to delete an executive by ID
     public void deleteExecutive(int eid) throws InvalidIdException {
@@ -175,4 +256,6 @@ public class ExecutiveService {
 	}
 
 	
+=======
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 }

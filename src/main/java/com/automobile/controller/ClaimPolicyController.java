@@ -4,6 +4,12 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
+=======
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,25 +17,43 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RestController;
 
 import com.automobile.dto.MessageDto;
 import com.automobile.exception.CannotClaimPolicyException;
 import com.automobile.exception.InvalidIdException;
 import com.automobile.exception.PolicyNotClaimedException;
+=======
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.automobile.dto.ClaimPolicyDto;
+import com.automobile.dto.MessageDto;
+import com.automobile.exception.CannotClaimPolicyException;
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 import com.automobile.model.ClaimDetails;
 import com.automobile.model.ClaimPolicy;
 import com.automobile.model.Policy;
 import com.automobile.service.ClaimPolicyService;
 
 @RestController
+<<<<<<< HEAD
 @CrossOrigin(origins = {"http://localhost:4200/"})
 @RequestMapping("/claim")
+=======
+@RequestMapping("/claim")
+@CrossOrigin(origins = { "http://localhost:4200" })
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 public class ClaimPolicyController {
 
 	@Autowired
 	private ClaimPolicyService claimPolicyService;
 
+<<<<<<< HEAD
+=======
+	// API for getting all the active policies
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 	@GetMapping("/showAll")
 	public ResponseEntity<?> getAllActivePolicy(Principal principal, MessageDto dto) {
 		String customerUsername = principal.getName();
@@ -41,6 +65,10 @@ public class ClaimPolicyController {
 		return ResponseEntity.ok(activeList);
 	}
 
+<<<<<<< HEAD
+=======
+	// API for claiming a policy by providing Claim documents
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 	@PostMapping("/one/{policyId}")
 	public ResponseEntity<?> claimPolicy(@PathVariable int policyId, Principal principal,
 			@RequestBody ClaimDetails claimDetails, MessageDto dto) {
@@ -54,6 +82,7 @@ public class ClaimPolicyController {
 		}
 	}
 
+<<<<<<< HEAD
 	@GetMapping("/status/{policyId}")
 	public ResponseEntity<?> claimPolicyStatus(@PathVariable int policyId, Principal principal, MessageDto dto) {
 		String customerUsername = principal.getName();
@@ -76,5 +105,23 @@ public class ClaimPolicyController {
         ClaimPolicy claimDetails = claimPolicyService.getClaimDetails(id);
         return ResponseEntity.ok(claimDetails);
     }
+=======
+	@GetMapping("/all-claims")
+	public Page<ClaimPolicyDto> getAllClaims(@RequestParam(defaultValue = "0", required = false) Integer page,
+			@RequestParam(defaultValue = "100000", required = false) Integer size, Principal principal) {
+		String customerUsername = principal.getName();
+
+		Pageable pageable = PageRequest.of(page, size);
+		return claimPolicyService.getAllClaims(customerUsername, pageable);
+	}
+
+	@GetMapping("/getNumberOfClaimsFiled")
+	public MessageDto getNumberOfClaimsFiled(Principal principal, MessageDto dto) {
+		String customerUsername = principal.getName();
+		long activeNo = claimPolicyService.getNumberOfClaimsFiled(customerUsername);
+		dto.setMsg(String.valueOf(activeNo));
+		return dto;
+	}
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 
 }

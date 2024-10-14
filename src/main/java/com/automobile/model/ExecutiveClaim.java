@@ -76,6 +76,10 @@ public class ExecutiveClaim {
 		return "ExecutiveClaim [id=" + id + ", executive=" + executive + ", claimPolicy=" + claimPolicy
 				+ ", updateDate=" + updateDate + ", claimStatus=" + claimStatus + "]";
 	}
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
     
 }

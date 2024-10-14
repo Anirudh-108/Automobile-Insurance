@@ -32,7 +32,11 @@ public class CustomerPolicy {
 	private PolicyRequestStatus policyRequestStatus;
 	
 	@ManyToOne
+<<<<<<< HEAD
 	private Executive executive;
+=======
+	private Executive updatedBy;
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 
 	public int getId() {
 		return id;
@@ -74,21 +78,36 @@ public class CustomerPolicy {
 		this.policyRequestStatus = policyRequestStatus;
 	}
 
+<<<<<<< HEAD
 	public Executive getExecutive() {
 		return executive;
 	}
 
 	public void setExecutive(Executive executive) {
 		this.executive = executive;
+=======
+	public Executive getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(Executive updatedBy) {
+		this.updatedBy = updatedBy;
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 	}
 
 	@Override
 	public String toString() {
 		return "CustomerPolicy [id=" + id + ", customer=" + customer + ", policy=" + policy + ", buyingDate="
+<<<<<<< HEAD
 				+ buyingDate + ", policyRequestStatus=" + policyRequestStatus + ", executive=" + executive + "]";
 	}
 
 	
+=======
+				+ buyingDate + ", policyRequestStatus=" + policyRequestStatus + ", updatedBy=" + updatedBy + "]";
+	}
+
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 
 	
 

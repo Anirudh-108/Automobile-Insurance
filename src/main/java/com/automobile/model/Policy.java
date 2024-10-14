@@ -28,7 +28,15 @@ public class Policy {
 	private PolicyStatus policyStatus;
 
 	@OneToOne
+<<<<<<< HEAD
 	private Vehicle vehicle;
+=======
+	Vehicle vehicle;
+
+	public Policy() {
+
+	}
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 
 	public int getId() {
 		return id;
@@ -78,7 +86,10 @@ public class Policy {
 		this.policyStatus = policyStatus;
 	}
 
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 	public Vehicle getVehicle() {
 		return vehicle;
 	}
@@ -94,6 +105,9 @@ public class Policy {
 				+ ", vehicle=" + vehicle + "]";
 	}
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
 }

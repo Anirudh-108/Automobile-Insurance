@@ -32,6 +32,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/signup").permitAll()
                         
                         .requestMatchers("/customer/add").permitAll()
+<<<<<<< HEAD
                         .requestMatchers("/customerDetails/add").hasRole("CUSTOMER")
                         .requestMatchers("/customerDocuments/upload").hasRole("CUSTOMER")
                         .requestMatchers("/customerDetails/upload/documents").hasRole("CUSTOMER") ///vehicleDocuments/upload
@@ -85,6 +86,47 @@ public class SecurityConfig {
                         .requestMatchers("/reports/{executiveId}/previous-month").hasRole("ADMIN")
                         .requestMatchers("/viewall-complaints/admin").hasRole("ADMIN")
                         .requestMatchers("/complaints/resolve/{id}").hasRole("ADMIN")
+=======
+                        .requestMatchers("/customer/update").permitAll()
+                        .requestMatchers("/customer/getName/{username}").permitAll()
+                        .requestMatchers("/customer/getCustomer/{username}").permitAll()
+                        
+                        .requestMatchers("/vehicle/add").permitAll()
+                        
+                        .requestMatchers("/customerDocuments/upload").permitAll()
+                        
+                        .requestMatchers("/vehicleDocuments/upload/{registrationNo}").permitAll()
+                        
+                        .requestMatchers("/complaint/add-complaint/{polcyId}").permitAll()
+                        .requestMatchers("/complaint/all-complaints").permitAll()
+                        
+                        .requestMatchers("/policy/showPolicy/{policyType}").permitAll()
+                        .requestMatchers("/policy/getPolicy/{policyType}").permitAll()
+                        .requestMatchers("/policy/buy/{policyType}").permitAll()
+                        .requestMatchers("/policy/getAllActivePolicies").permitAll()
+                        .requestMatchers("/policy/getAllExpiredPolicies").permitAll()
+                        .requestMatchers("/policy/getActivePolicy/{policyId}").permitAll()
+                        .requestMatchers("/policy/getNumberOfActivePolicies").permitAll()
+                        .requestMatchers("/policy/getNumberOfExpiredPolicies").permitAll()
+                        .requestMatchers("/policy/getVehicleByPolicyId/{policyId}").permitAll()
+                        .requestMatchers("/policy/getPolicyById/{policyId}").permitAll()
+                        
+                        .requestMatchers("/claim/showAll").hasRole("CUSTOMER")
+                        .requestMatchers("/claim/one/{policyId}").hasRole("CUSTOMER")
+                        .requestMatchers("/claim/all-claims").permitAll()
+                        .requestMatchers("/claim/getNumberOfClaimsFiled").permitAll()  
+                        
+                        .requestMatchers("/renewal/showAll").hasRole("CUSTOMER")
+                        .requestMatchers("/renewal/renew/{policyId}").permitAll()
+                        
+                        .requestMatchers("/user/hello").hasAnyRole("USER", "ADMIN")
+                        
+                        .requestMatchers("/executive/policies/customerId").hasAnyRole("EXECUTIVE", "ADMIN")
+                        .requestMatchers("/executive/policies/status/{policyRequestStatus}").hasAnyRole("EXECUTIVE","ADMIN")
+                        .requestMatchers("/executive/policy/{policyId}/request-status").hasAnyRole("EXECUTIVE", "ADMIN")
+                        .requestMatchers("/executive/claim/status").hasAnyRole("EXECUTIVE","ADMIN")
+                        .requestMatchers("/executive/policy/{claimpolicyId}/status").hasAnyRole("EXECUTIVE","ADMIN")
+>>>>>>> 9bbbd5c0f59209cb4ece85113afbb61cb92ba005
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
